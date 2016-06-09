@@ -769,50 +769,52 @@ print ${${(Cs:-:):-fred-goat-dog.jpg}%.*}
 var="$(<file)"
  
 * Zsh Syntax Aide-Memoire (concentrated)    
-| Command | Description |
-| ~cd -<TAB>~     | list recent dirs 
-| ~cp 1.php ~-<TAB> | list recent dirs 
-| vi *(om[1])<TAB>  | edit newest file 
-| ls *(.mh3)  | modified 3 hours ago
-| ls *(.mh-3) | less than 3 hours
-| ls *(.mh+3) | more than 3 hours
-| gvim -p *(m0)     | all files modified today
-| mv *.*(^m-1) old/ | move all but todays files to sub-directory
-| vi -p *(.om[1,3]) | open 3 newest files in tabs (gvim)
-| ls *(^m0)         | files NOT modified today
-| ls -l *(m4)       | list files modified exactly 4 days ago
-| ls *.(jpg|gif|png)(.) | do not break if one or other image type absent 
-| ls ~1/*(.om[1])   | list newest file from previous directory needs setopt autopushcd 
-| ls -lt  **/*~pdf/*(.m0om[1,10]) | up to 10 files modified in last 24 hrs  
-| for f (*.php) { diff $f  ${PWD/html/staging}/$f} | diff all files in parallel directories 
-| mv !?main<TAB> | recall previous command containing the string main
-| mv !?main?$<tab> | recall just last parameter of command containing the string main 
-| scp -rp *(om[1]) root@192.168.168.157:$PWD 
-| scp -rp *(om[1]) root@192.168.168.157:${PWD/test/live}   modify pwd remote path
-| !?client | recall most recent cmd containing string 'client'
-| vi !?client?$<tab>  | recall just last parameter of cmd containing 'client'
-| ls (x*~x[3-5])    | list files x* except x3 to x5
-| ls **/*~*/.git/*  | ignore all git subdirectories *~* matches a path 
-| ls (^(backup*|cache*|list*|tmp)/)|#*(.) # ignore 4 directories  
-| !!:gs/fred/joe/       | edit previous command replace all fred by joe
-| cp NF ${PWD/html/release}    | 
-| while (TRUE){echo -n .;sleep 1} | 
+| Command                                                  | Description                                                      |
+|----------------------------------------------------------+------------------------------------------------------------------|
+| ~cd -<TAB>~                                              | list recent dirs                                                 |
+| ~cp 1.php -<TAB>~                                        | list recent dirs                                                 |
+| ~vi *(om[1])<TAB>~                                       | edit newest file                                                 |
+| ~ls *(.mh3)~                                             | modified 3 hours ago                                             |
+| ~ls *(.mh-3)~                                            | less than 3 hours                                                |
+| ~ls *(.mh+3)~                                            | more than 3 hours                                                |
+| ~gvim -p *(m0)~                                          | all files modified today                                         |
+| ~mv *.*(^m-1) old/~                                      | move all but todays files to sub-directory                       |
+| ~vi -p *(.om[1,3])~                                      | open 3 newest files in tabs (gvim)                               |
+| ~ls *(^m0)~                                              | files NOT modified today                                         |
+| ~ls -l *(m4)~                                            | list files modified exactly 4 days ago                           |
+| ~ls ~1/*(.om[1])~                                        | list newest file from previous directory needs setopt autopushcd |
+| ~ls -lt  **/*~pdf/*(.m0om[1,10])~                        | up to 10 files modified in last 24 hrs                           |
+| ~for f (*.php) { diff $f  ${PWD/html/staging}/$f}~       | diff all files in parallel directories                           |
+| ~mv !?main<TAB>!=~                                       | recall previous command containing the string main               |
+| ~mv !?main?$<tab>~                                       | recall just last parameter of command containing the string main |
+| ~scp -rp *(om[1]) root@192.168.168.157:$PWD~             |                                                                  |
+| ~scp -rp *(om[1]) root@192.168.168.157:${PWD/test/live}~ | modify pwd remote path                                           |
+| ~!?client~                                               | recall most recent cmd containing string 'client'                |
+| ~vi !?client?$<tab>~                                     | recall just last parameter of cmd containing 'client'            |
+| ~ls (x*~x[3-5])~                                         | list files x* except x3 to x5                                    |
+| ~ls **/*~*/.git/*~                                       | ignore all git subdirectories *~* matches a path                 |
+| ~!!:gs/fred/joe/~                                        | edit previous command replace all fred by joe                    |
+| ~cp NF ${PWD/html/release}~                              |                                                                  |
+| ~while (TRUE){echo -n .;sleep 1}~                        |                                                                  |
+| ~ls (^(backup*|cache*|list*|tmp)/)|#*(.)~ | ignore 4 directories  |
+| ~ls *.(jpg|gif|png)(.)~ | do not break if one or other image type absent |
 
 ** super commands
+#+BEGIN_SRC shell
 zargs **/*.(js|php|css)~(djr|libs|dompdf)/*~*/junk/* -- grep -i 
 alias phpall='for f (*.php~test.php(om)) {php -l $f} | more'
-alias phpsub=' for f (./(async|inc)/*.php~test.php(om) *.php(om)) {php -l $f} | more' # 
+alias phpsub=' for f (./(async|inc)/*.php~test.php(om) *.php(om)) {php -l $f} | more' 
 alias diffall='for f (*.php~test.php(.om)){diff -q $f ${PWD/html/staging}/$f} 2>&1 | grep differ'
 alias -g STAG=' ${PWD/html/staging}'
-
 mv Licence\ to\ Print\ Money.pdf !#^:gs/\\ // 
+A=(1 2 5 6 7 9) # pre-populate an array
+for ((i=1;$#A[i];i++)) echo $A[$i]
 
-A=(1 2 5 6 7 9) # pre-populate an array    # 
-for ((i=1;$#A[i];i++)) echo $A[$i]    # 
 # debug echo shell commands and provide trace info 
 # you do need XTRACE if you want to echo whats happening in your script
 setopt XTRACE VERBOSE
 unsetopt XTRACE VERBOSE
+#+END_SRC shell
 
 * misc 
 ** switch two previously typed words with alt-t 
@@ -839,18 +841,18 @@ ssh -t root@192.18.001.001 'sh -c "cd /tmp && exec zsh -l"'
 echo "enter 0-2,a" 
 read ans ; # read in a parameter
 case "$ans" in
-0|${prog}0) cd "$(cat /c/aam/${prog}0)" ;;
-1|${prog}1) cd "$(cat /c/aam/${prog}1)" ;;
-2|${prog}9) cd "$(cat /c/aam/${prog}9)" ;;
-a|${prog}l) cd "$(cat /c/aam/${prog}a)" ;;
-**) echo "wrong number $ans\n" ;;
+    0|${prog}0) cd "$(cat /c/aam/${prog}0)" ;;
+    1|${prog}1) cd "$(cat /c/aam/${prog}1)" ;;
+    2|${prog}9) cd "$(cat /c/aam/${prog}9)" ;;
+    a|${prog}l) cd "$(cat /c/aam/${prog}a)" ;;
+    **) echo "wrong number $ans\n" ;;
 esac
 #+END_SRC shell
 
 * Useful aliases
 | Alias                                                                              | Description                                                           |
 |------------------------------------------------------------------------------------+-----------------------------------------------------------------------+
-| ~alias flip=' cd html live > /dev/null &>1  cd live html > /dev/null &>1' | swap ~ | flip between 2 deep parallel directories |
+| ~alias flip='cd html live > /dev/null &>1  cd live html > /dev/null &>1' | swap ~ | flip between 2 deep parallel directories |
 | ~alias phpall='for f (*.php~test.php(om)) {php -l $f}'~                            | syntax-check all php files in date order excluding some               |
 | ~alias diffall='for f (*.php~test.php(.om)) { diff -q $f  ${PWD/html/staging}/$f}'~ | diff all files in parallel directories in date oder (excluding some ) |
 
