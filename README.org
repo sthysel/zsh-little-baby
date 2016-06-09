@@ -850,9 +850,9 @@ esac
 * Useful aliases
 | Alias                                                                              | Description                                                           |
 |------------------------------------------------------------------------------------+-----------------------------------------------------------------------+
-| ~alias flip=' cd html live > /dev/null &>1  cd live html > /dev/null &>1'~ | swap / flip between 2 deep parallel directories |
+| ~alias flip=' cd html live > /dev/null &>1  cd live html > /dev/null &>1' | swap ~ | flip between 2 deep parallel directories |
 | ~alias phpall='for f (*.php~test.php(om)) {php -l $f}'~                            | syntax-check all php files in date order excluding some               |
-| ~alias diffall='for f (*.php~test.php(.om)) { diff -q $f  ${PWD/html/staging}/$f}' | diff all files in parallel directories in date oder (excluding some ) |
+| ~alias diffall='for f (*.php~test.php(.om)) { diff -q $f  ${PWD/html/staging}/$f}'~ | diff all files in parallel directories in date oder (excluding some ) |
 
 * locating/identifying things 
 #+BEGIN_SRC shell
