@@ -3,11 +3,13 @@
 Converted to org file from $IFORGOT FIXME
 
 * Global aliases
+#+BEGIN_SRC
 alias -g ND='*(/om[1])' # newest directory
 alias -g NF='*(.om[1])' # newest file
 # Example of use
 cp NF ND          # copy newest file to newest directory
 cat NF > $(print NF).txt # *N*
+#+END_SRC
 
 * Glob Examples
 ls (x*~x[3-5])    # list files x* except x3 to x5
