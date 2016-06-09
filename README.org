@@ -5,18 +5,18 @@
 Converted to org from http://www.zzapper.co.uk/zshtips.html
 
 * Global aliases
-#+BEGIN_SRC shell
-alias -g ND='*(/om[1])' # newest directory
-alias -g NF='*(.om[1])' # newest file
-#+END_SRC
+| Alias                     | Description      |
+|---------------------------+------------------|
+| ~alias -g ND='*(/om[1])'~ | newest directory |
+| ~alias -g NF='*(.om[1])'~ | newest file      |
+
 Example of use
 #+BEGIN_SRC shell
-cp NF ND          # copy newest file to newest directory
-cat NF > $(print NF).txt # 
+$ cp NF ND          # copy newest file to newest directory
+$ cat NF > $(print NF).txt 
 #+END_SRC
 
-* Common Examples
-** Listing 
+* Listing 
 | Command                    | Description                                              |
 |----------------------------+----------------------------------------------------------|
 | ~ls *(.)~                  | list just regular files                                  |
@@ -36,30 +36,7 @@ cat NF > $(print NF).txt #
 | ~ls -l *(.L-20)~           | list file size less than 20 bytes - . ignore directories |
 
 
-** counts (#) requires extended globbing 
-~setopt EXTENDED_GLOB~
-
- 
-| Command                                     | Description                                 |
-|---------------------------------------------+---------------------------------------------|
-| ~grep -i "$1" */*.php~libs/*~temp/*~test/*~ | Exclude directories lib,temp,test from grep |
-| ~ls DATA_[0-9](#c3).csv~                    | match all files DATA_nnn.csv                |
-| ~ls a(#c3).txt~                             | match aaa.txt                               |
-| ~ls DATA_[0-9](#c4,7).csv~                  | match DATA_nnnn.csv to DATA_nnnnnnn.txt     |
-| ~ls DATA_[0-9](#c4,).csv~                   | match DATA_nnnn.csv to DATA_nnnnn.txt etc   |
-| ~ls DATA_[0-9](#c,4).csv~                   | match DATA_n.csv to DATA_nnn.txt            |
-| ~touch {1..5} {6,7,8,12} {00..03}~          |                                             |
-
-| ls <-> <-6> <4-> <4-5> 0<-> {1..5} {2,3} {00..03} (4|5) [3-4]  [3-47-8] 0? ?2 *2 | |
-
-| ls {p..q}<5->{1..4}.(#I)php(.N)  | | 
-| touch {y,y2}.cfm |
-| ls y2#.cfm y{2,}.cfm y(2|).cfm {y2,y}.cfm (y|y2).cfm y*.cfm | |
-| touch {t,p}{01..99}.{php,html,c}  | generate 600 test files |
-
-
-* zsh list largest / biggest files , files larger than
-
+* Listing by file size
 | Command                          | Description                                       |
 |----------------------------------+---------------------------------------------------|
 | ~ls -l *(Lk+100)~                | list file size larger/greater than 100kb          |
@@ -78,25 +55,40 @@ cat NF > $(print NF).txt #
 | ~mv *(.mw+2) old/~               | older than 2 weeks                                |
 | ~mv *(.mM+2) old/~               | older than 2 months                               |
 
+* Listing by permission
+| Command                                   | Description                                                                                                                 |
+|-------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------|
+| ~ls -ld *.*(u:apache:)~                   | User is apache                                                                                                              |
+| =ls -l *.*~[a-m]*(u:nobody:g:apache:.xX)= | Excluding files a-m but only if owned by apache                                                                             |
+| ~ls **/*(u0WLk+10m0)~                     | Find all files owned by root (u0), world-writable (W), more than 10k in size (Lk+10) and modified during the last hour (m0) |
+| ~ls **/*(.:g-w:)~                         | find all files that don’t have the write permission to group in current directory and all subdirectories                    |
 
 
-* File ownership/permissions
-ls -ld *.*(u:apache:)
+* Counting (#)  
+Requires extended globbing ~setopt EXTENDED_GLOB~
+ 
+| Command                                     | Description                                 |
+|---------------------------------------------+---------------------------------------------|
+| =grep -i "$1" */*.php~libs/*~temp/*~test/*= | Exclude directories lib,temp,test from grep |
+| ~ls DATA_[0-9](#c3).csv~                    | match all files DATA_nnn.csv                |
+| ~ls a(#c3).txt~                             | match aaa.txt                               |
+| ~ls DATA_[0-9](#c4,7).csv~                  | match DATA_nnnn.csv to DATA_nnnnnnn.txt     |
+| ~ls DATA_[0-9](#c4,).csv~                   | match DATA_nnnn.csv to DATA_nnnnn.txt etc   |
+| ~ls DATA_[0-9](#c,4).csv~                   | match DATA_n.csv to DATA_nnn.txt            |
+| ~touch {1..5} {6,7,8,12} {00..03}~          |                                             |
+| ~touch {t,p}{01..99}.{php,html,c}~          | generate 600 test files                     |
 
-* Excluding files a-m but only if owned by apache
--rwxr-xr-x. 1 nobody (owner) apache (Group) 0 Feb 24 10:23 x.x
-ls -l *.*~[a-m]*(u:nobody:g:apache:.xX)
+* Greps
+| Command | Description |
+|---------+-------------|
+| =grep -i "$1" **/*.{js,php,css}~(libs|temp|temp|test)/*= | exclude directories from grep  EXTENDED_GLOB required|
+| =grep -iw '$direct' report/**/*.{inc,php}=   | searching for a php variable|
 
-* Find all files owned by root (u0), world-writable (W), more than 10k in size (Lk+10) and modified during the last hour (m0)
-ls **/*(u0WLk+10m0)
+* Cleanup
+| Command        | Description                             |
+|----------------+-----------------------------------------|
+| ~rm **/.*.swp~ | deleting  double dot files & swap files |
 
-* find all files that don’t have the write permission to group in current directory and all subdirectories
-ls **/*(.:g-w:)
-# grep
-grep -i "$1" **/*.{js,php,css}~(libs|temp|temp|test)/* # exclude directories from grep  EXTENDED_GLOB required
-grep -iw '$direct' report/**/*.{inc,php}  # searching for a php variable
-#  deleting  double dot files & swap files 
-rm **/.*.swp
 
 * Use tab to complete/display history item before executing
 !1 # oldest command in your history
@@ -767,7 +759,7 @@ print ${${(Cs:-:):-fred-goat-dog.jpg}%.*}
 #new
 #" read a file into a variable
 var="$(<file)"
- 
+
 * Zsh Syntax Aide-Memoire (concentrated)    
 | Command                                                  | Description                                                      |
 |----------------------------------------------------------+------------------------------------------------------------------|
@@ -817,10 +809,8 @@ unsetopt XTRACE VERBOSE
 #+END_SRC shell
 
 * misc 
-** switch two previously typed words with alt-t 
-
 #+BEGIN_SRC shell
-bindkey "^[t" transpose-words
+bindkey "^[t" transpose-words # switch two previously typed words with alt-t 
 setopt interactivecomments  # allows end of command line comments
 take(){[ $# -eq 1 ]  && mkdir "$1" && cd "$1"} # create a directory and move to it in one go
 zmodload -F zsh/stat b:zstat
