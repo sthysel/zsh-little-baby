@@ -14,16 +14,18 @@ cat NF > $(print NF).txt #
 #+END_SRC
 
 * Glob Examples
-|ls (x*~x[3-5])    | list files x* except x3 to x5                                 
-|ls x^[3-5]*       | list files x* except x3 to x5 
-|ls **/*~*/.git/*  | ignore all git subdirectories *~* matches a path 
-|vi !$             | vi last parameter
-|vi !-2:2          | second parameter of second but last command
-|vi !$:r.php       | vi last parameter but change extension to .php
-|^php^cfm          | modify previous command (good for correcting spellos)
-|ls *(.L0)         | list pesky empty files (yes that is a zero) 
-|ls -l *(L-2)      | list file size less than 2 bytes 
-|ls -l *(.L-20)    | list file size less than 20 bytes - . ignore directories 
+| Command            | Description                                              |
+|--------------------+----------------------------------------------------------|
+| ~ls (x*~x[3-5])~   | list files x* except x3 to x5                            |
+| ~ls x^[3-5]*~      | list files x* except x3 to x5                            |
+| ~ls **/*~*/.git/*~ | ignore all git subdirectories *~* matches a path         |
+| ~vi !$~            | vi last parameter                                        |
+| ~vi !-2:2~         | second parameter of second but last command              |
+| ~vi !$:r.py~       | vi last parameter but change extension to .py            |
+| ~^php^cfm~         | modify previous command (good for correcting spellos)    |
+| ~ls *(.L0)~        | list pesky empty files (yes that is a zero)              |
+| ~ls -l *(L-2)~     | list file size less than 2 bytes                         |
+| ~ls -l *(.L-20)~   | list file size less than 20 bytes - . ignore directories |
 
 * zsh list largest / biggest files , files larger than
 ls -l *(Lk+100)   # list file size larger/greater than 100kb 
