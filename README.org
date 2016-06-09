@@ -36,7 +36,7 @@ cat NF > $(print NF).txt #
 | ~ls -l *(Lk+100)~                | list file size larger/greater than 100kb          |
 | ~ls -l *(Lm+2)~                  | list file size larger/greater than 2 mbs          |
 | ~ls **/*(.Lm+10)~                | list files larger than 10MB anywhere in hierarchy |
-| ~ls -hlS **/*(.Lm+2) \vert less~ | list largest files  largest first                 |
+| ~ls -hlS **/*(.Lm+2) | less~     | list largest files  largest first                 |
 | ~ls -hlS /**/*(.OL[1,10])~       | find the 10 biggest files on your system          |
 | ~ls *(.m0)~                      | modified today (last 24 hours)                    |
 | ~ls *(.m-1)~                     | modified today (last 24 hours)                    |
