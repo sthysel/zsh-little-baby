@@ -1,5 +1,7 @@
  #+TITLE: ZSH Working examples
 
+[[https://www.youtube.com/watch?v=nl2ooOxDCjY][zsh little baby]]
+
 Converted to org file from http://www.zzapper.co.uk/zshtips.html
 
 * Global aliases
