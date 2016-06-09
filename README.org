@@ -15,19 +15,48 @@ cp NF ND          # copy newest file to newest directory
 cat NF > $(print NF).txt # 
 #+END_SRC
 
-* Glob Examples
-| Command            | Description                                              |
-|--------------------+----------------------------------------------------------|
-| ~ls (x*~x[3-5])~   | list files x* except x3 to x5                            |
-| ~ls x^[3-5]*~      | list files x* except x3 to x5                            |
-| ~ls **/*~*/.git/*~ | ignore all git subdirectories *~* matches a path         |
-| ~vi !$~            | vi last parameter                                        |
-| ~vi !-2:2~         | second parameter of second but last command              |
-| ~vi !$:r.py~       | vi last parameter but change extension to .py            |
-| ~^php^cfm~         | modify previous command (good for correcting spellos)    |
-| ~ls *(.L0)~        | list pesky empty files (yes that is a zero)              |
-| ~ls -l *(L-2)~     | list file size less than 2 bytes                         |
-| ~ls -l *(.L-20)~   | list file size less than 20 bytes - . ignore directories |
+* Common Examples
+** Listing 
+| Command                    | Description                                              |
+|----------------------------+----------------------------------------------------------|
+| ~ls *(.)~                  | list just regular files                                  |
+| ~ls -d *(/)~               | list just directories                                    |
+| ~ls (x*~x[3-5])~           | list files x* except x3 to x5                            |
+| ~ls x^[3-5]*~              | list files x* except x3 to x5                            |
+| ~ls *(.[3])~               | third file                                               |
+| ~ls **/*~*/.git/*~         | ignore all git subdirectories *~* matches a path         |
+| ~vi *(.om[1])~             | vi newest file                                           |
+| ~vi *~ssver.scc(.om[1]) &~ | newest file ignoring any vssver.scc                      |
+| ~vi !$~                    | vi last parameter                                        |
+| ~vi !-2:2~                 | second parameter of second but last command              |
+| ~vi !$:r.py~               | vi last parameter but change extension to .py            |
+| ~^php^cfm~                 | modify previous command (good for correcting spellos)    |
+| ~ls *(.L0)~                | list pesky empty files (yes that is a zero)              |
+| ~ls -l *(L-2)~             | list file size less than 2 bytes                         |
+| ~ls -l *(.L-20)~           | list file size less than 20 bytes - . ignore directories |
+
+
+** counts (#) requires extended globbing 
+~setopt EXTENDED_GLOB~
+
+ 
+| Command                                     | Description                                 |
+|---------------------------------------------+---------------------------------------------|
+| ~grep -i "$1" */*.php~libs/*~temp/*~test/*~ | Exclude directories lib,temp,test from grep |
+| ~ls DATA_[0-9](#c3).csv~                    | match all files DATA_nnn.csv                |
+| ~ls a(#c3).txt~                             | match aaa.txt                               |
+| ~ls DATA_[0-9](#c4,7).csv~                  | match DATA_nnnn.csv to DATA_nnnnnnn.txt     |
+| ~ls DATA_[0-9](#c4,).csv~                   | match DATA_nnnn.csv to DATA_nnnnn.txt etc   |
+| ~ls DATA_[0-9](#c,4).csv~                   | match DATA_n.csv to DATA_nnn.txt            |
+| ~touch {1..5} {6,7,8,12} {00..03}~          |                                             |
+
+| ls <-> <-6> <4-> <4-5> 0<-> {1..5} {2,3} {00..03} (4|5) [3-4]  [3-47-8] 0? ?2 *2 | |
+
+| ls {p..q}<5->{1..4}.(#I)php(.N)  | | 
+| touch {y,y2}.cfm |
+| ls y2#.cfm y{2,}.cfm y(2|).cfm {y2,y}.cfm (y|y2).cfm y*.cfm | |
+| touch {t,p}{01..99}.{php,html,c}  | generate 600 test files |
+
 
 * zsh list largest / biggest files , files larger than
 
@@ -49,22 +78,7 @@ cat NF > $(print NF).txt #
 | ~mv *(.mw+2) old/~               | older than 2 weeks                                |
 | ~mv *(.mM+2) old/~               | older than 2 months                               |
 
-* counts requires extended globbing 
-setopt EXTENDED_GLOB   # lots of clever stuff requires this
-ls DATA_[0-9](#c3).csv  # match all files DATA_nnn.csv  
-ls a(#c3).txt     # match aaa.txt   
-ls DATA_[0-9](#c4,7).csv  # match DATA_nnnn.csv to DATA_nnnnnnn.txt 
-ls DATA_[0-9](#c4,).csv  # match DATA_nnnn.csv to DATA_nnnnn.txt etc 
-ls DATA_[0-9](#c,4).csv  # match DATA_n.csv to DATA_nnn.txt 
-touch {1..5} {6,7,8,12} {00..03} # 
-ls <-> <-6> <4-> <4-5> 0<-> {1..5} {2,3} {00..03} (4|5) [3-4]  [3-47-8] 0? ?2 *2 # 
-ls {p..q}<5->{1..4}.(#I)php(.N)  # 
-touch {y,y2}.cfm
-ls y2#.cfm y{2,}.cfm y(2|).cfm {y2,y}.cfm (y|y2).cfm y*.cfm # 
-touch {t,p}{01..99}.{php,html,c}  # generate 600 test files 
 
-* Exclude directories lib,temp,test from grep  EXTENDED_GLOB required
-grep -i "$1" */*.php~libs/*~temp/*~test/* 
 
 * File ownership/permissions
 ls -ld *.*(u:apache:)
@@ -755,8 +769,9 @@ print ${${(Cs:-:):-fred-goat-dog.jpg}%.*}
 var="$(<file)"
  
 * Zsh Syntax Aide-Memoire (concentrated)    
-| cd -<TAB>         | list recent dirs 
-| cp 1.php ~-<TAB>  | list recent dirs 
+| Command | Description |
+| ~cd -<TAB>~     | list recent dirs 
+| ~cp 1.php ~-<TAB> | list recent dirs 
 | vi *(om[1])<TAB>  | edit newest file 
 | ls *(.mh3)  | modified 3 hours ago
 | ls *(.mh-3) | less than 3 hours
@@ -800,7 +815,9 @@ setopt XTRACE VERBOSE
 unsetopt XTRACE VERBOSE
 
 * misc 
-# switch two previously typed words with alt-t 
+** switch two previously typed words with alt-t 
+
+#+BEGIN_SRC shell
 bindkey "^[t" transpose-words
 setopt interactivecomments  # allows end of command line comments
 take(){[ $# -eq 1 ]  && mkdir "$1" && cd "$1"} # create a directory and move to it in one go
@@ -808,8 +825,11 @@ zmodload -F zsh/stat b:zstat
 zstat -g canal-bridge.mov # full files details 
 # remember current directory : double quotes vital
 alias markcd="cd $(pwd)"      
+#+END_SRC shell
 
-# run a remote zsh script via ssh 
+
+** run a remote zsh script via ssh 
+#+BEGIN_SRC shell
 ssh 192.168.1.218 -l root "zsh -c 'for i (/usr/*(/)) {ls \$i }'"
 # compare local & remote file size 
 FILE=$(echo *(.om[1])) && ls -l $FILE && ssh 192.168.1.1 -l root "zsh -c 'ls -l $PWD/$FILE'"
@@ -819,42 +839,28 @@ ssh -t root@192.18.001.001 'sh -c "cd /tmp && exec zsh -l"'
 echo "enter 0-2,a" 
 read ans ; # read in a parameter
 case "$ans" in
- 0|${prog}0) cd "$(cat /c/aam/${prog}0)" ;;
- 1|${prog}1) cd "$(cat /c/aam/${prog}1)" ;;
- 2|${prog}9) cd "$(cat /c/aam/${prog}9)" ;;
- a|${prog}l) cd "$(cat /c/aam/${prog}a)" ;;
- **) echo "wrong number $ans\n" ;;
+0|${prog}0) cd "$(cat /c/aam/${prog}0)" ;;
+1|${prog}1) cd "$(cat /c/aam/${prog}1)" ;;
+2|${prog}9) cd "$(cat /c/aam/${prog}9)" ;;
+a|${prog}l) cd "$(cat /c/aam/${prog}a)" ;;
+**) echo "wrong number $ans\n" ;;
 esac
+#+END_SRC shell
 
 * Useful aliases
-# swap / flip between 2 deep parallel directories 
-alias flip=' cd html live > /dev/null &>1 || cd live html > /dev/null &>1'
-# syntax-check all php files in date order excluding certain
-alias phpall='for f (*.php~test.php(om)) {php -l $f}'
-# diff all files in parallel directories in date oder (exclude certain)
-alias diffall='for f (*.php~test.php(.om)) { diff -q $f  ${PWD/html/staging}/$f}'
+| Alias                                                                              | Description                                                           |
+|------------------------------------------------------------------------------------+-----------------------------------------------------------------------+
+| ~alias flip=' cd html live > /dev/null &>1  cd live html > /dev/null &>1'~ | swap / flip between 2 deep parallel directories |
+| ~alias phpall='for f (*.php~test.php(om)) {php -l $f}'~                            | syntax-check all php files in date order excluding some               |
+| ~alias diffall='for f (*.php~test.php(.om)) { diff -q $f  ${PWD/html/staging}/$f}' | diff all files in parallel directories in date oder (excluding some ) |
 
 * locating/identifying things 
+#+BEGIN_SRC shell
 which zsh 
 whence -vsa ${(k)commands[(I)zsh*]}  # search for zsh* 
 locate zsh 
 cd $(locate -l1 -r "/zoo.txt$")(:h) # cd to directory of first occurence of a file zoo.txt (N)
 cd ${$(locate zoo.txt)[1]:h}   
 cd **/resource.php(:h) 
-
-str=aa,bb,cc;print ${(j:,:)${(qq)${(s:,:)str}}} # quotify a string 
-
-* Completion
-# define tab-completable parameters p1,p2,p3 for your widget
-compdef "_values 'widget tool' p1 p2 p3" widget
-widget
-p1 p2 p3
-
-* Bind history to up down keys
-autoload -U up-line-or-beginning-search
-autoload -U down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey "^[[A" up-line-or-beginning-search
-bindkey "^[[B" down-line-or-beginning-search
+#+END_SRC
 
