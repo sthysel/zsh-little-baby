@@ -1,12 +1,12 @@
 # zsh little dev
 
-!(https://www.youtube.com/watch?v=nl2ooOxDCjY)
+![Shhh](https://www.youtube.com/watch?v=nl2ooOxDCjY)
 
 Converted to md from http://www.zzapper.co.uk/zshtips.html
 
 # Global aliases
-Alias                     | Description
----------------------------+------------------
+Alias                    | Description
+------------------------ | ----------------
 `alias -g ND='*(/om[1])'` | newest directory 
 `alias -g NF='*(.om[1])'` | newest file
 
@@ -18,81 +18,85 @@ $ cat NF > $(print NF).txt
 
 # Listing 
 Command                    | Description                                            
-----------------------------+-------------------------------------------------------|
-`ls *(.)`                  | list just regular files                                
-`ls -d *(/)`               | list just directories                                  
-`ls (x*`x[3-5])`           | list files x* except x3 to x5                          
-`ls x^[3-5]*`              | list files x* except x3 to x5                          
-`ls *(.[3])`               | third file                                             
-`ls **/*`*/.git/*`         | ignore all git subdirectories *`* matches a path       
-`vi *(.om[1])`             | vi newest file                                         
-`vi *`ssver.scc(.om[1]) &` | newest file ignoring any vssver.scc                    
-`vi !$`                    | vi last parameter                                      
-`vi !-2:2`                 | second parameter of second but last command            
-`vi !$:r.py`               | vi last parameter but change extension to .py          
+-------------------------- | ------------
+`ls *(.)`                  | list just regular files                             
+`ls -d *(/)`               | list just directories                               
+`ls (x*`x[3-5])`           | list files x* except x3 to x5                       
+`ls x^[3-5]*`              | list files x* except x3 to x5                       
+`ls *(.[3])`               | third file                                          
+`ls **/*`*/.git/*`         | ignore all git subdirectories *`* matches a path    
+`vi *(.om[1])`             | vi newest file                                      
+`vi *`ssver.scc(.om[1]) &` | newest file ignoring any vssver.scc                 
+`vi !$`                    | vi last parameter                                   
+`vi !-2:2`                 | second parameter of second but last command         
+`vi !$:r.py`               | vi last parameter but change extension to .py       
 `^php^cfm`                 | modify previous command (good for correcting spellos)  
 `ls *(.L0)`                | list pesky empty files (yes that is a zero)            
 `ls -l *(L-2)`             | list file size less than 2 bytes                       
 `ls -l *(.L-20)`           | list file size less than 20 bytes - . ignore directories
 
 # Listing by file size
-| Command                          | Description                                       |
-|----------------------------------+---------------------------------------------------|
-| `ls -l *(Lk+100)`                | list file size larger/greater than 100kb          |
-| `ls -l *(Lm+2)`                  | list file size larger/greater than 2 mbs          |
-| `ls **/*(.Lm+10)`                | list files larger than 10MB anywhere in hierarchy |
-| `ls -hlS **/*(.Lm+2) | less`     | list largest files  largest first                 |
-| `ls -hlS /**/*(.OL[1,10])`       | find the 10 biggest files on your system          |
-| `ls *(.m0)`                      | modified today (last 24 hours)                    |
-| `ls *(.m-1)`                     | modified today (last 24 hours)                    |
-| `ls *(.^m0)`                     | not modified today                                |
-| `ls *.*(m3)`                     | modified 3 days ago                               |
-| `ls *.*(mh3)`                    | modified 3 hours ago                              |
-| `ls *.*(mh-3)`                   | less than 3 hours                                 |
-| `ls *.*(mh+3)`                   | more than 3 hours                                 |
-| `ls *.*(^mh3)`                   | all files not 3 hours  old                        |
-| `mv *(.mw+2) old/`               | older than 2 weeks                                |
-| `mv *(.mM+2) old/`               | older than 2 months                               |
+Command                    | Description                                            
+-------------------------- | ------------
+`ls -l *(Lk+100)`                | list file size larger/greater than 100kb          
+`ls -l *(Lm+2)`                  | list file size larger/greater than 2 mbs          
+`ls **/*(.Lm+10)`                | list files larger than 10MB anywhere in hierarchy 
+`ls -hlS **/*(.Lm+2) | less`     | list largest files  largest first                 
+`ls -hlS /**/*(.OL[1,10])`       | find the 10 biggest files on your system          
+`ls *(.m0)`                      | modified today (last 24 hours)                    
+`ls *(.m-1)`                     | modified today (last 24 hours)                    
+`ls *(.^m0)`                     | not modified today                                
+`ls *.*(m3)`                     | modified 3 days ago                               
+`ls *.*(mh3)`                    | modified 3 hours ago                              
+`ls *.*(mh-3)`                   | less than 3 hours                                 
+`ls *.*(mh+3)`                   | more than 3 hours                                 
+`ls *.*(^mh3)`                   | all files not 3 hours  old                        
+`mv *(.mw+2) old/`               | older than 2 weeks                                
+`mv *(.mM+2) old/`               | older than 2 months                               
 
-* Listing by permission
-| Command                                   | Description                                                                                                                 |
-|-------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------|
-| `ls -ld *.*(u:apache:)`                   | User is apache                                                                                                              |
-| =ls -l *.*`[a-m]*(u:nobody:g:apache:.xX)= | Excluding files a-m but only if owned by apache                                                                             |
-| `ls **/*(u0WLk+10m0)`                     | Find all files owned by root (u0), world-writable (W), more than 10k in size (Lk+10) and modified during the last hour (m0) |
-| `ls **/*(.:g-w:)`                         | find all files that don’t have the write permission to group in current directory and all subdirectories                    |
+# Listing by permission
+Command                                   | Description                                                                                                                 
+------ | ----------
+`ls -ld *.*(u:apache:)`                   | User is apache                                                                                                              
+```ls -l *.*`[a-m]*(u:nobody:g:apache:.xX)``` | Excluding files a-m but only if owned by apache                                                                             
+`ls **/*(u0WLk+10m0)`                     | Find all files owned by root (u0), world-writable (W), more than 10k in size (Lk+10) and modified during the last hour (m0) 
+`ls **/*(.:g-w:)`                         | find all files that don’t have the write permission to group in current directory and all subdirectories                    
 
 
-* Counting (#)  
+# Counting (#)
 Requires extended globbing `setopt EXTENDED_GLOB`
  
-| Command                                     | Description                                 |
-|---------------------------------------------+---------------------------------------------|
-| =grep -i "$1" */*.php`libs/*`temp/*`test/*= | Exclude directories lib,temp,test from grep |
-| `ls DATA_[0-9](#c3).csv`                    | match all files DATA_nnn.csv                |
-| `ls a(#c3).txt`                             | match aaa.txt                               |
-| `ls DATA_[0-9](#c4,7).csv`                  | match DATA_nnnn.csv to DATA_nnnnnnn.txt     |
-| `ls DATA_[0-9](#c4,).csv`                   | match DATA_nnnn.csv to DATA_nnnnn.txt etc   |
-| `ls DATA_[0-9](#c,4).csv`                   | match DATA_n.csv to DATA_nnn.txt            |
-| `touch {1..5} {6,7,8,12} {00..03}`          |                                             |
-| `touch {t,p}{01..99}.{php,html,c}`          | generate 600 test files                     |
+Command                                     | Description                                 
+------------------------------------------- | --------------------------------------------
+```grep -i "$1" */*.php`libs/*`temp/*`test/*``` | Exclude directories lib,temp,test from grep
+`ls DATA_[0-9](#c3).csv`                    | match all files DATA_nnn.csv              
+`ls a(#c3).txt`                             | match aaa.txt                             
+`ls DATA_[0-9](#c4,7).csv`                  | match DATA_nnnn.csv to DATA_nnnnnnn.txt   
+`ls DATA_[0-9](#c4,).csv`                   | match DATA_nnnn.csv to DATA_nnnnn.txt etc 
+`ls DATA_[0-9](#c,4).csv`                   | match DATA_n.csv to DATA_nnn.txt          
+`touch {1..5} {6,7,8,12} {00..03}`          |                                           
+`touch {t,p}{01..99}.{php,html,c}`          | generate 600 test files                   
 
-* Greps
-| Command | Description |
-|---------+-------------|
-| =grep -i "$1" **/*.{js,php,css}`(libs|temp|temp|test)/*= | exclude directories from grep  EXTENDED_GLOB required|
-| =grep -iw '$direct' report/**/*.{inc,php}=   | searching for a php variable|
+# Greps
+Command | Description |
+------- | -------------|
+```grep -i "$1" **/*.{js,php,css}`(libs|temp|temp|test)/* ``` | exclude directories from grep  EXTENDED_GLOB required|
+```grep -iw '$direct' report/**/*.{inc,php}```   | searching for a php variable|
 
-* Cleanup
+# Cleanup
 | Command        | Description                             |
-|----------------+-----------------------------------------|
+|--------------- | ----------------------------------------|
 | `rm **/.*.swp` | deleting  double dot files & swap files |
 
 
-* Use tab to complete/display history item before executing
-!1 # oldest command in your history
-!! # previous command
-!-2 # command before last
+# Use tab to complete/display history item before executing
+
+
+Command | Description |
+------- | -------------|
+!1 | oldest command in your history
+!! | previous command
+!-2 | command before last
 !$ (last argument of previous command)
 !$:h (last argument, strip one level)
 !$:h:h (last argument, strip two levels)
@@ -100,73 +104,62 @@ Requires extended globbing `setopt EXTENDED_GLOB`
 echo !* !!:* (all parameters)
 echo !$ !!:$ (last parameter)
 echo !^ !:1 !!:1 (first previous parameter)
-echo !:2-3   # echo previous parameters 2 to 3 
-echo !:2*    # echo previous parameters 2 onwards  
-echo !:2-    # echo previous parameters 2 onwards omitting last 
-echo !:-3    # echo first 3 previous parameters
-echo !-2:2 (second parameter of second but last command)
-echo convert_csv.php(:a) # echo full path 
-/c/aad/dbtools/pd-email-list/convert_csv.php
+echo !:2-3   | echo previous parameters 2 to 3 
+echo !:2*    | echo previous parameters 2 onwards  
+echo !:2-    | echo previous parameters 2 onwards omitting last 
+echo !:-3    | echo first 3 previous parameters
+echo !-2:2 | second parameter of second but last command
+touch 1 2 3    | 
+!!:0 !^ !:2 !$ !#$ !#:2 !#1 !#0   |  *U*
+history               | View recent commands
+!42                   | Re-execute history command 42
 
-touch 1 2 3    # 
-!!:0 !^ !:2 !$ !#$ !#:2 !#1 !#0   #  *U*
+# substitute previous command
+Command | Description |
+------- | -------------|
+r oldstr=newstr | 
+!!:s/fred/joe/        | edit previous command replace first fred by joe
+!!:s/fred/joe/        | Note : sadly no regexp available with :s///
+!!:gs/fred/joe/       | edit previous command replace all fred by joe
+mv Licence\ to\ Print\ Money.pdf !#^:gs/\\ //  | rename file removing spaces
+^fred^joe             | edit previous command replace fred by joe
+^str1^str2^:u:p       | replace str1 by str2 change case and just display
+echo chim | 
+^chim^&-&ney-&-&-cheree | reuse LHS
+!42:p | also use control-R
+^str1^str2^:G         | replace as many as possible
 
-history               # View recent commands
-!42                   # Re-execute history command 42
+~In all of above remember <TAB> will display changed command WITHOUT executing it~
 
-* substitute previous command
-r oldstr=newstr
-!!:s/fred/joe/        # edit previous command replace first fred by joe
-!!:s/fred/joe/        # Note : sadly no regexp available with :s///
-!!:gs/fred/joe/       # edit previous command replace all fred by joe
-mv Licence\ to\ Print\ Money.pdf !#^:gs/\\ //  # rename file removing spaces
-^fred^joe             # edit previous command replace fred by joe
-^str1^str2^:u:p       # replace str1 by str2 change case and just display
-echo chim
-^chim^&-&ney-&-&-cheree # reuse LHS
-!42:p
-also use control-R
-^str1^str2^:G         # replace as many as possible
-
-* In all of above remember <TAB> will display changed command WITHOUT executing it 
-
-cd !?ls<TAB>   #get command and parameters of a previous ls command
-cd !?ls?:*<TAB>   #get (just) parameters of a previous ls command
+Command | Description |
+------- | -------------|
+cd !?ls<TAB>   | get command and parameters of a previous ls command
+cd !?ls?:*<TAB>    | get (just) parameters of a previous ls command
 function scd(){setopt nonomatch;e=/dev/null;cd $1 &> $e||cd ${1}* &> $e||cd *$1 &> $e||cd *${1}* &> $e||echo sorry} 
-function ddump(){diff -w `dump/"$1" "$1"}   #  diff local file with new one in dump
-function cdump(){cp -p `dump/"$1" "$1"}   #  replace local file with new one in dump
+function ddump(){diff -w `dump/"$1" "$1"}   |  diff local file with new one in dump
+function cdump(){cp -p `dump/"$1" "$1"}   |  replace local file with new one in dump
 
 
-Generating a command from an earlier one
-How to recall the parameters of a previous command, on line 7 below
-recall the parameters of line 5
-
+# Generating a command from an earlier one
+How to recall the parameters of a previous command, on line 7 below recall the parameters of line 5
+```
 5> mv somefile1 /home/saket/stuff/books/
 6> acroread somefile.pdf
 7> mv somefile2 /home/saket/stuff/books/
+```
 
-> mv !?saket<TAB>
-Would bring up the whole line ready for a little editing
+``` $ mv !?saket<TAB>``` Would bring up the whole line ready for a little editing
+``` $ mv !?saket?:*<tab>``` Would just bring up the parameters
+If you know the history number of the line (say 5) with desired parameters you can try ```!5:s/somefile1/somefile2/```
+and if you dont know the history number```!?saket?:s/somefile1/somefile2/```
 
-or purist
-
-> mv !?saket?:*<tab>
-Would just bring up the parameters
-
-If you know the history number of the line (say 5) with desired parameters you can try
-
-> !5:s/somefile1/somefile2/
-
-and if you dont know the history number
-
-!?saket?:s/somefile1/somefile2/
-
-* Variable Substitution 
+# Variable Substitution 
 s=(fred joe peter);echo ${s/(#m)*/$MATCH[1,3]} # truncate strings in an array
 
-* History Substitution Summary
+# History Substitution Summary
 For CURRENT line that you are editing (the # designates current line)
- Remember Tab will expand the following
+
+Remember Tab will expand the following:
 
 !#:0    command
 !#^     first parameter
@@ -176,15 +169,15 @@ For CURRENT line that you are editing (the # designates current line)
 !#*     all parameters
 !#$:s/bash/zsh perform substitution on previous parameter
 
-* Backup a file with a prefix
+# Backup a file with a prefix
 cp longfilename.php backup_!#^
 cp {,backup_}longfilename.php   # same thing
 
-* Backup a file with a suffix
+# Backup a file with a suffix
 cp longfilename.php !#^:r.bak
 cp longfilename.{php,bak}   # expands to cp longfilename.php longfilename.bak
 
-* For Previous Command (for comparison)
+# For Previous Command (for comparison)
 !-1     repeat whole command
 !!      repeat (shortcut)
 !!0     command
@@ -228,14 +221,14 @@ echo ${fred:h:h}
 echo ${fred:t:r}
 cd !$:h  (remove file name)
 
-* cd to directory containing report.php
+#  cd to directory containing report.php
 cd **/report.php(:h) 
 cat !!:t (only file name)
 
-* Convert images (foo.gif => foo.jpg):
+#  Convert images (foo.gif => foo.jpg):
 $ for i in **/*.gif; convert $i $i:r.jpg
 
-* Examples of if then else conditionals 
+#  Examples of if then else conditionals 
 [[ 0 = 0 ]] && echo eq || echo neq
 [[ 1 = 0 ]] && echo eq || echo neq
 if [ $# -gt 0 ];then string=$*;else;string=$(getclip);fi # get parameter OR paste buffer
@@ -257,7 +250,7 @@ print ${param:&}   (last substitute)
 
 < readme.txt  # < shorthand for more
 
-* Directory substitution (magic)
+#  Directory substitution (magic)
 # if you were in directory
 # cd old new
 /c/inetpub/dev.somehomes.co.uk/epsystem/eppigeon/
@@ -269,23 +262,23 @@ cd /v/w/h/<tab>
 # expand to
 # cd /var/www/html/
 
-* filtering the output of a command conventionally
+#  filtering the output of a command conventionally
 print $(history -n -1|sed 's/.* //')
 
-* ${${(z)foo}[2]} zsh filtering mechanism
+#  ${${(z)foo}[2]} zsh filtering mechanism
 print ${${(z)$(history -n -1)}[-1]}
 print ${${(z)history[$((HISTCMD-1))]}[-1]}
 gvim.exe $(history -n -1 | sed "s/^[^ ]* //;s/ .*//")
 print ${${(z)history[$((HISTCMD-1))]}[2]}
 
-* Save last 4 history items to a file (without numbers) 
+#  Save last 4 history items to a file (without numbers) 
 fc -ln -4 > /tmp/hist   # no numbers
 fc -ln 1 | grep rsync | gvim -
 fc -l -5     # 5 most recent 
 fc -l 1 5   # 5 oldest 
 fc -l -10 -5  # 10th newest to 5 newest 
 
-* ls
+#  ls
 ls -ld *(/^F)  # list any empty sub-directories
 ls -ld **/*(/^F) # recursively list any empty sub-directories
 print **/*(/^F) | xargs -n1 -t rmdir #delete empty directories
@@ -294,24 +287,24 @@ autoload zargs;zargs ./**/*.{php,inc,js} -- grep -i 'cons. unit'    EXTENDED_GLO
 zargs **/*.{js,php,css}`(libs|locallibs|test|dompdf)/* -- grep console.log  EXTENDED_GLOB
 zargs ./**/*.(php|inc|js) -- tar rvf dev2$(date '+%d-%m-%Y').tar 
 
-* grep whole file structure for php files with if ($var=4) (single equals) bug
+#  grep whole file structure for php files with if ($var=4) (single equals) bug
 zargs ./**/*.{inc,php} -- grep -i 'if *( *$[a-z0-9_]*=[0-9"]'   ## detect if ($fred=2) type php errors (single equals) 
 
-* selectively tar a web root 
+#  selectively tar a web root 
 zargs ./{html,live}/**/*.(php|inc|js)`(**/wiki|**/dompdf)/* -- tar rvf /tmp/web2$(date "+%d-%m-%Y").tar
 zargs **/*.(php|inc) -- sed -i 's#ereg_replace("\([^"]*\)"#preg_replace("/\1/"#g'    ## global sed substitute using zargs 
 ls ^x*           # list all but x*
 
-* list all files without an extension ( no dot)
+#  list all files without an extension ( no dot)
 a=(**/*(.D));echo $#a  # count files in a (huge) hierarchy 
 ls *`*.*(.)
 
-* Delete all directories Pictures_of_* except Pictures_of_beautiful_flowers
+#  Delete all directories Pictures_of_* except Pictures_of_beautiful_flowers
 rm -rf Pictures_of_^beautiful_flowers   # selective delete 
 ls x*`(x3|x5)    # list files x* except x3 and x5
 ls **/fred*`*junk*/* # list all files fred* unless in a junk directory
 
-* grep, dont use egrep, grep -E is better
+#  grep, dont use egrep, grep -E is better
 # single quotes stop the shell, " quotes allow shell interaction
 grep 'host' **/(*.cfm`(ctpigeonbot|env).cfm)
 grep -i 'host' **/(*.cfm`(ctpigeonbot|env).cfm)`*((#s)|/)junk*/*(.)
@@ -332,7 +325,7 @@ grep "Fred\(eric\)\? Smith" file   # grep fred or frederic
 grep -i "<H\([1-6]\).*</H\1>" *.html # matches pairs of tags
 tel blenkinsop | grep -o "[[:alnum:][:graph:]]*@[[:alnum:][:graph:]]*" # filter just an email address from a text stream (not zsh)   
 
-* ls
+#  ls
 ls *.h`(fred|foo).h # same thing
 ls (x*`x[3-5])   # list files x* except x3 to x5
 ls *[^2].php`*template*  # list files with 2nd filter
@@ -355,7 +348,7 @@ ls foot(fall)#.pl #  match option string fall
 setopt no_case_glob  # set ignore case for ls etc
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'   # case insensitive completion for cd etc 
 
-* Globbing modifiers
+#  Globbing modifiers
 # :e just the suffix  (Extension)
 # :r removes the suffix  (Remove)
 # :t takes away the path (Tail)
@@ -395,7 +388,7 @@ ls *.{aux,dvi,log,toc} # rm latex temp files
 rm ./*(Om[1,-11])# removes all files but the ten newest ones (delete all but last 10 files in a directory)
 mv *.*(^m-1) old/ # move all but today's files to sub-directory archive older files 
 
-* exact dates (N)
+#  exact dates (N)
 ls -l *.*(mM4)
 autoload -U age
 ls -tl *.*(e#age 2014/06/01 now#)
@@ -411,17 +404,17 @@ ls *.c(:r)       # strip suffix
 ls **/*(.)       # only files no directories (.) means files only
 ls -ld *(/)      # list only directories
 
-* Oddities
+#  Oddities
 chmod g+w **/*  # group write
 [[ FOO = (#i)foo ]]  # case insensitive matching
 fred=$((6**2 + 6))      # can do maths
 : > /apache/access.log  # truncate a log file
 
-* arrays
+#  arrays
 X=(x1 x2)               # create an array
 print -C 1 $X           # print each array element on it's own line
 
-* 2 dimensional arrays- lookup conversion 
+#  2 dimensional arrays- lookup conversion 
 typeset -A convtable
 convtable=(151 2 152 2 153 2 158 4 159 3 160 2 171 4 172 1 173 4)
 echo $convtable[158]
@@ -434,7 +427,7 @@ filelst+=($x)           # append (push) to an array (better)
 files=(${(f)"$(egrepcmd1l)"} ) # push a sentence to an array (where egrepcmd1l is a global alias
 % print ${array:t}
 .zshenv .zshrc .zlogout
-* Substring extraction ${parameter:start:length} , default length is rest 
+#  Substring extraction ${parameter:start:length} , default length is rest 
 a=12345
 echo ${a:2:2}
 34
@@ -443,13 +436,13 @@ echo ${a:2}
 echo ${a[1,3]}
 123
 
-* zsh zingers
+#  zsh zingers
 alias -g NF='*(.om[1])' # newest file
 # parse xml file putting each tag on a new line
 perl -ne 's/(<\/\w+>)/$1\n/g; print' < NF > $(print NF).txt
 cat NF > $(print NF).txt
 
-* Variable substitution
+#  Variable substitution
 somevar="bu&^*ck"                  # variable with mucky characters
 print ${somevar//[^[:alnum:]]/_}   # replace all non-alphanumerics with _ the // indicates global substitution 
 echo ${file##*/}                   # echo just the file name (strip the path)
@@ -476,7 +469,7 @@ url='www.some.com/some_strIng-HERe'
 anchortext=${${(C)url//[_-]/ }:t}  # titlecase 
 echo "<a href='$url'>$anchortext</a>"
 
-* Vreating a family of functions
+#  Vreating a family of functions
 # generate hrefs from url
 function href{,s}
 {
@@ -494,7 +487,7 @@ echo -n $col
 echo $href > /dev/clipboard | more
 }
 
-* Regular expressions in zsh  examples 
+#  Regular expressions in zsh  examples 
 #pcre perl regular expressions   
 
 zmodload zsh/pcre
@@ -506,14 +499,14 @@ var=ddddd; [[ "$var" =` ^d+$ ]] && echo matched || echo did not match
 var=dddee; regexp="^e+$"; [[ "$var" =` $regexp ]] && echo $regexp matched $var || echo $regexp did not match $var
 
 
-* Decisions
+#  Decisions
 # cd to different drive depending on Windows login name
 drive=$([[ "$LOGNAME" != davidr ]] && echo '/o' || echo '/c') # trad way
 cd ${drive}/inetpub/wwwdev/www.some.co.uk/
 drive=${${${LOGNAME:#davidr}:+/o}:-/c}                        # zsh way
 cd ${drive}/inetpub/wwwdev/www.some.co.uk/
 
-* Chaining two modifications 
+#  Chaining two modifications 
 # .om[1] gives newest file
 # cyg is a zsh function doing a path conversion e.g. /c/ to C:/ 
 cyg(){reply=("$(cygpath -m $REPLY)")}
@@ -527,7 +520,7 @@ cp -a file1 file   # -a transfer  permissions etc of file1 to file2preserve
 # variable with variable name
 eval "$1=$PWD"
 
-* Brilliant will change your life
+#  Brilliant will change your life
 setopt autopushd                # 
 dirs -v                         # 
 cd `5                           # cd to fifth directory in directory stack
@@ -546,7 +539,7 @@ cd /u/lo/li<tab>  completes to /usr/local/lib
 #directory sizes
 du -sk *(/)
 
-* Inline aliases, zsh -g aliases can be anywhere in command line
+#  Inline aliases, zsh -g aliases can be anywhere in command line
 alias -g G='| grep -'
 alias -g L='| less'
 #this reduces a command like
@@ -558,13 +551,13 @@ alias -g T=' | tee /c/aaa/tee.txt '       # tee
 alias -g F=' | fmt -'                     # format
 alias -g W=' | wc -l'                     # wc
 
-* cd by .. or ... or ... or mv file ..../.
+#  cd by .. or ... or ... or mv file ..../.
 alias '..'='cd ..'
 alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'
 
-* Suffix based alias
+#  Suffix based alias
 alias -s jpg='/c/program\ files/IrfanView/i_view32.exe'
 now just type the image name to launch irfanview
 alias -s php='c:/wamp/php/php.exe'  # now just type test.php to execute it 
@@ -585,7 +578,7 @@ myscript >&1 >output.txt                  # log a script output
 #Redirection to file as well as send on to pipe:
 make install > /tmp/logfile | grep -i error
 
-* Permissions & ownership 
+#  Permissions & ownership 
 ls *(.f644)                            # files with permissions 644
 ls *(.g:root:)                            # files belonging to group root
 ls *(.u:apache:)                            # files belonging to user apache
@@ -593,33 +586,33 @@ ls -l *(.rwg:nobody:u:root:)              # user has read/write permissions
 
 function g{0..9} { gmark $0 $* }          # declaring multiple functions
 
-* zmv "programmable rename"
+#  zmv "programmable rename"
 autoload -U zmv
 
-* Replace spaces in filenames with a underline
+#  Replace spaces in filenames with a underline
 zmv '* *' '$f:gs/ /_'
 zmv '(* *)' '${1// /}'
 zmv -Q "(**/)(* *)(D)" "\$1\${2// /_}"
 
-* Change the suffix from *.sh to *.pl
+#  Change the suffix from *.sh to *.pl
 zmv -W '*.sh' '*.pl'
 
-* Lowercase/uppercase all files/directories (-i) interactive
+#  Lowercase/uppercase all files/directories (-i) interactive
 $ zmv -i '(*)' '${(L)1}' # lowercase
 $ zmv -i '(*)' '${(U)1}' # uppercase
 $ zmv '([a-z])(*).txt' '${(C)1}$2.txt' ; rename fred.txt to Fred.txt
 
-* Initialize zsh/config 
+#  Initialize zsh/config 
 autoload -U compinit
 compinit
 
-* case insensitive completion
+#  case insensitive completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' \
      'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 #Wonderful zftp (write ftp scripts as though shell)
 
-* init (could be in .zshenv etc)
+#  init (could be in .zshenv etc)
 autoload -U zfinit  
 zfinit  
 zfparams www.someweb.co.uk myuserid mypassword
@@ -629,7 +622,7 @@ zfls -l zshtips.html
 zfput zshtips.html
 zfls -l zshtips.html
 
-* replace every occurence of a file (zsh and bash)
+#  replace every occurence of a file (zsh and bash)
 for f in */include/dbcommon.php; do;cp dbcommon.php $f; done
 # alternative for loop
 # replace every instance of file with new version
@@ -637,7 +630,7 @@ for f (**/x) cp newx $f
 for f (**/x) {cp newx $f } 
 for f in **/x; do;cp newx $f; done
 
-* create a clone of a file, modifying it on the fly 
+#  create a clone of a file, modifying it on the fly 
 for i in {3,4}; sed s/flag=2/flag=$i/ fred.txt > fred$i.txt
 for i in {1..9}; sed s/flag=2/flag=$i/ fred.txt > fred$i.txt
 # can be simplified to 
@@ -647,7 +640,7 @@ for f (*(.)) mv $f fixed_$f
 for f (*.csv.csv) {mv $f ${f:r}} # remove one level of extension 
 for x ( 1 2 {7..4} a b c {p..n} *.php) {echo $x} 
 
-* loop a command 
+#  loop a command 
 while true; do echo "infinite loop"; sleep 5; done
 while (TRUE){echo .;sleep 1}
 # loop a command 
@@ -657,7 +650,7 @@ echo "loop $count"
 done
 for c ({1..50}) {php ./test.php; sleep 5;} 
 
-* using vared editor
+#  using vared editor
 vared -p "choose 1-3 : " -c ans
 case $ans in
  1|a) sdba $key;;
@@ -666,7 +659,7 @@ case $ans in
  *) echo "wrong answer $ans\n" ;;
 esac
 
-* select
+#  select
 PROMPT3="Choose File : "
 select f in $(ls **/*.tex |egrep -i "${param}[^/]*.tex")
 do
@@ -678,20 +671,20 @@ do
  fi
 done
 
-* multiple script commands on same line
+#  multiple script commands on same line
 if [ $# -gt 0 ];then string=$*;else;string=$(getclip);fi
 if grep -iq 'matching' *.php ;then echo "Found" ;else echo "Not Found"; fi   
 
-* Command on multilines with a backslash
+#  Command on multilines with a backslash
 ls \
 > x*
 
-* Command on multilines with a quote
+#  Command on multilines with a quote
 sed '
  s/mvoe/move/g
  s/thier/their/g' myfile
 
-* Editing a variable 
+#  Editing a variable 
 vared PATH
 
 bindkey -v # vi mode line editting
@@ -715,17 +708,18 @@ bindkey "^N"      most-recent-file
 zstyle ':completion:expand-args-of::::' completer expand-args-of
 bindkey '^x^a' expand-args-of
 
-* Prompt at end of command line
+#  Prompt at end of command line
 RPROMPT="[%t]" (display the time)
 
-* colo(u)red prompt
+#  colo(u)red prompt
 fg_light_red=$'%{\e[1;31m%}'
 PS3="$fg_light_red Select file : "
 
-* print fred in blue color
+# print fred in blue color
+
 print '\e[1;34m fred'
 
-* color module
+# color module
 autoload colors ; colors
 print "$bg[cyan]$fg[blue]Welcome to man zsh-lovers" >> $TTY
 PROMPT="%{$bg[cyan]%}%{$fg[red]%}%n%{$reset_color%}%{$bg[cyan]%}@%{$fg[red]%}%m %{$fg[yellow]%}%` %{$reset_color%}%{$bg[cyan]%}%% "
@@ -762,7 +756,7 @@ var="$(<file)"
 ```
 # zsh Syntax synopis
 | Command                                                  | Description                                                      |
-|----------------------------------------------------------+------------------------------------------------------------------|
+|---------------------------------------------------------- | ------------------------------------------------------------------|
 | `cd -<TAB>`                                              | list recent dirs                                                 |
 | `cp 1.php -<TAB>`                                        | list recent dirs                                                 |
 | `vi *(om[1])<TAB>`                                       | edit newest file                                                 |
