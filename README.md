@@ -637,14 +637,14 @@ cyg is a zsh function doing a path conversion e.g. /c/ to C:/
 
 ``` zsh
 cyg(){reply=("$(cygpath -m $REPLY)")}
-gvim.exe $(echo /c/aax/*(.om[1]))(+cyg) &  ### nested
-gvim.exe /c/aax/*(.om[1]+cyg) &            #### both operations
+gvim $(echo /c/aax/*(.om[1]))(+cyg) &  # nested
+gvim /c/aax/*(.om[1]+cyg) &            # both operations
 ```
 
 # Odd stuff not necessarily zsh
 
 ``` zsh
-cp -a file1 file   # -a transfer  permissions etc of file1 to file2preserve
+cp -a file1 file   # -a transfer permissions etc of file1 to file2preserve
 ```
 ## only copy if destination file exists and is older that source file
 
@@ -660,7 +660,7 @@ eval "$1=$PWD"
 
 ## Tips
 
-Tip | Decription
+Tip | Description
 --- | ---
 setopt autopushd                 | 
 dirs -v                          | 
