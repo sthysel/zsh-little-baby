@@ -147,7 +147,7 @@ function cdump(){cp -p \`dump/"$1" "$1"}   |  replace local file with new one in
 
 # Generating a command from an earlier one
 How to recall the parameters of a previous command, on line 7 below recall the parameters of line 5
-```
+``` zsh
 5> mv somefile1 /home/saket/stuff/books/
 6> acroread somefile.pdf
 7> mv somefile2 /home/saket/stuff/books/
@@ -170,7 +170,6 @@ For CURRENT line that you are editing (the # designates current line)
 
 Remember Tab will expand the following:
 
-_
 Command | Description |
 ------- | -------------|
 !#:0   |  command
@@ -189,35 +188,46 @@ cp {,backup_}longfilename.php   # same thing
 ```
 
 # Backup a file with a suffix
+
+``` zsh
 cp longfilename.php !#^:r.bak
-cp longfilename.{php,bak}   # expands to cp longfilename.php longfilename.bak
+```
+expands to cp longfilename.php longfilename.bak
+
+```
+cp longfilename.{php,bak}   
+```
 
 # For Previous Command (for comparison)
-!-1     repeat whole command
-!!      repeat (shortcut)
-!!0     command
-!^      first parameter
-!:1     first parameter
-!:1-4   first 4 parameters
-!:-4  !:0-4  first 4 parameters plus command
-!!-     all but last parameter 
-!51$    last parameter of history entry 51 
-!$      last parameter
-!*      all parameters
-!!:s/bash/zsh (or ^bash^zsh)
-!^:t    just file name of first parameter
-!$:h    just path of last parameter
-!-2$:r  just file name without extension of first parameter
+Command | Description |
+------- | -------------|
+!-1   |   repeat whole command
+!!    |   repeat (shortcut)
+!!0   |   command
+!^    |   first parameter
+!:1   |   first parameter
+!:1-4 |   first 4 parameters
+!:-4  !:0-4 |  first 4 parameters plus command
+!!-   |  all but last parameter 
+!51$  |  last parameter of history entry 51 
+!$    |  last parameter
+!*    |  all parameters
+!!:s/bash/zsh | or ^bash^zsh
+!^:t   |  just file name of first parameter
+!$:h   |  just path of last parameter
+!-2$:r |  just file name without extension of first parameter
 
 For last but one command
-!-2     repeat last but one command
-!-2^    first parameter last but one command
-!-2$    last parameter last but one command
-!-2:2   second parameter of second but last command
-!-2:s/bash/zsh
-etc
+Command | Description |
+------- | -------------|
+!-2    | repeat last but one command
+!-2^   | first parameter last but one command
+!-2$   | last parameter last but one command
+!-2:2  | second parameter of second but last command
+!-2:s/bash/zsh | etc
+
 For history command 42
-!42
+`!42`
 
 
 !:0 is the previous command name
@@ -226,7 +236,8 @@ For history command 42
 !-2, !-3,  are earlier commands
 !-2^, !-2:2, !-2$, !-2* are earlier parameters
 
-ls /                  # recall/step through previous parameters 
+# recall/step through previous parameters 
+ls /                  
 fred='/bin/path/fred.txt'
 echo ${fred:e}
 echo ${fred:t}
@@ -236,142 +247,205 @@ echo ${fred:h:h}
 echo ${fred:t:r}
 cd !$:h  (remove file name)
 
-#  cd to directory containing report.php
+# cd to directory containing report.php
+
+``` zsh
 cd **/report.php(:h) 
 cat !!:t (only file name)
+```
 
 #  Convert images (foo.gif => foo.jpg):
+
+``` zsh
 $ for i in **/*.gif; convert $i $i:r.jpg
+```
 
 #  Examples of if then else conditionals 
-[[ 0 = 0 ]] && echo eq || echo neq
-[[ 1 = 0 ]] && echo eq || echo neq
-if [ $# -gt 0 ];then string=$*;else;string=$(getclip);fi # get parameter OR paste buffer
+
+Command | Description 
+------- | -------------
+[[ 0 = 0 ]] && echo eq \|\| echo neq | 
+[[ 1 = 0 ]] && echo eq  \|\| echo neq |
+if [ $# -gt 0 ];then string=$\*;else;string=$(getclip);fi | get parameter OR paste buffer
 var=133;if [[ "$var" = <-> ]] ; then echo "$var is numeric" ;fi
-if [[ "$ip" = <-> ]] then # check ip address numeric 
-if [[ "$1" == [0-9] ]]  # if $1 is a digit
-if (( $# == 0 ));
-if [ $# -gt 0 ]  # parameter cnt > 0 (arguments)
-if [[ "$url" = www* ]] # begins with www
-if [ "$p1" = "end" ] || [ "$p1" = "-e" ]
-if [[ "$p2" == *[a-zA-Z][a-zA-Z][a-zA-Z]* ]]  # contains at least 3 letters
-if builtin cd $1 &> /dev/null ;
-if [[ -e /c/aam/z$1 ]]  # file exists
-if [ $cnt -eq 1 ]
-if (( ${#dirs} == 1 )); then   # count array length
-if [[ "$pwd" == *$site2* ]]
+if [[ "$ip" = <-> ]] then | check ip address numeric 
+if [[ "$1" == [0-9] ]]  | if $1 is a digit
+if (( $# == 0 )); | 
+if [ $# -gt 0 ]  | parameter cnt > 0 (arguments)
+if [[ "$url" = www* ]] | begins with www
+if [ "$p1" = "end" ] \|\| [ "$p1" = "-e" ] | 
+if [[ "$p2" == \*[a-zA-Z][a-zA-Z][a-zA-Z]\* ]]  | contains at least 3 letters
+if builtin cd $1 &> /dev/null ; | 
+if [[ -e /c/aam/z$1 ]]  | file exists
+if [ $cnt -eq 1 ] | 
+if (( ${#dirs} == 1 )); then   | count array length
+if [[ "$pwd" == *$site2* ]] | 
 
+``` zsh
 print ${param:&}   (last substitute)
+```
 
-< readme.txt  # < shorthand for more
+[a-za-z]: 
 
-#  Directory substitution (magic)
-# if you were in directory
+# Directory substitution
+If you were in directory
+
+``` zsh
 # cd old new
 /c/inetpub/dev.somehomes.co.uk/epsystem/eppigeon/
 cd dev www
-#would put you in parallel directory
+# would put you in parallel directory
 /c/inetpub/www.somehomes.co.uk/epsystem/eppigeon/
+```
+
 # completion
-cd /v/w/h/<tab>
-# expand to
-# cd /var/www/html/
+
+`cd /v/w/h/<tab>`
+expands to
+`cd /var/www/html/`
 
 #  filtering the output of a command conventionally
-print $(history -n -1|sed 's/.* //')
 
-#  ${${(z)foo}[2]} zsh filtering mechanism
+``` zsh
+print $(history -n -1|sed 's/.* //')
+```
+
+#  `${${(z)foo}[2]}` zsh filtering mechanism
+
+``` zsh
 print ${${(z)$(history -n -1)}[-1]}
 print ${${(z)history[$((HISTCMD-1))]}[-1]}
 gvim.exe $(history -n -1 | sed "s/^[^ ]* //;s/ .*//")
 print ${${(z)history[$((HISTCMD-1))]}[2]}
+```
 
 #  Save last 4 history items to a file (without numbers) 
-fc -ln -4 > /tmp/hist   # no numbers
+Command | Description 
+------- | -------------
+fc -ln -4 > /tmp/hist   | no numbers
 fc -ln 1 | grep rsync | gvim -
-fc -l -5     # 5 most recent 
-fc -l 1 5   # 5 oldest 
-fc -l -10 -5  # 10th newest to 5 newest 
+fc -l -5     | 5 most recent 
+fc -l 1 5   | 5 oldest 
+fc -l -10 -5  | 10th newest to 5 newest 
 
 #  ls
-ls -ld *(/^F)  # list any empty sub-directories
-ls -ld **/*(/^F) # recursively list any empty sub-directories
-print **/*(/^F) | xargs -n1 -t rmdir #delete empty directories
-rmdir ./**/*(/od) 2> /dev/null # deletes empty directories
-autoload zargs;zargs ./**/*.{php,inc,js} -- grep -i 'cons. unit'    EXTENDED_GLOB
-zargs **/*.{js,php,css}`(libs|locallibs|test|dompdf)/* -- grep console.log  EXTENDED_GLOB
-zargs ./**/*.(php|inc|js) -- tar rvf dev2$(date '+%d-%m-%Y').tar 
+Command | Description |
+------- | -------------|
+`ls -ld *(/^F)` | list any empty sub-directories
+`ls -ld **/*(/^F)` | recursively list any empty sub-directories
+`print **/*(/^F) \| xargs -n1 -t rmdir`  | delete empty directories
+`rmdir ./**/*(/od) 2> /dev/null` | deletes empty directories
+`autoload zargs;zargs ./**/*.{php,inc,js} -- grep -i 'cons. unit'` |   EXTENDED_GLOB
+`zargs **/*.{js,php,css}`(libs|locallibs|test|dompdf)/* -- grep console.log ` |  EXTENDED_GLOB
+`zargs ./**/*.(php|inc|js) -- tar rvf dev2$(date '+%d-%m-%Y').tar ` | 
 
 #  grep whole file structure for php files with if ($var=4) (single equals) bug
-zargs ./**/*.{inc,php} -- grep -i 'if *( *$[a-z0-9_]*=[0-9"]'   ## detect if ($fred=2) type php errors (single equals) 
+detect if ($fred=2) type php errors (single equals) 
+
+``` zsh
+zargs ./**/*.{inc,php} -- grep -i 'if *( *$[a-z0-9_]*=[0-9"]'
+```
 
 #  selectively tar a web root 
+
+``` zsh
 zargs ./{html,live}/**/*.(php|inc|js)`(**/wiki|**/dompdf)/* -- tar rvf /tmp/web2$(date "+%d-%m-%Y").tar
 zargs **/*.(php|inc) -- sed -i 's#ereg_replace("\([^"]*\)"#preg_replace("/\1/"#g'    ## global sed substitute using zargs 
 ls ^x*           # list all but x*
+```
 
 #  list all files without an extension ( no dot)
+
+``` zsh
 a=(**/*(.D));echo $#a  # count files in a (huge) hierarchy 
 ls *`*.*(.)
+```
 
 #  Delete all directories Pictures_of_* except Pictures_of_beautiful_flowers
+
+``` zsh
 rm -rf Pictures_of_^beautiful_flowers   # selective delete 
 ls x*`(x3|x5)    # list files x* except x3 and x5
 ls **/fred*`*junk*/* # list all files fred* unless in a junk directory
+```
 
-#  grep, dont use egrep, grep -E is better
-# single quotes stop the shell, " quotes allow shell interaction
+#  grep
+Don't use egrep, grep -E is better, or even better `ag`
+single quotes stop the shell, " quotes allow shell interaction
+
+``` zsh
 grep 'host' **/(*.cfm`(ctpigeonbot|env).cfm)
 grep -i 'host' **/(*.cfm`(ctpigeonbot|env).cfm)`*((#s)|/)junk*/*(.)
 egrep -i "^ *mail\(" **/*.php  
 grep "^ *mail\(" **/*.php`*junk*/*  #find all calls to mail, ignoring junk directories
-# grep '.' dot matches one character
+```
+
+grep '.' dot matches one character
+
+``` zsh
 grep b.g file    # match bag big bog but not boog
-# grep * matches 0 , 1 or many of previous character
+```
+
+grep * matches 0 , 1 or many of previous character
 grep "b*g" file # matches g or bg or bbbbg 
-# grep '.*' matches a string
+grep '.*' matches a string
 grep "b.*g" file # matches bg bag bhhg bqqqqqg etc
+
 # grep break character is \
+
+``` zsh
 grep 'hello\.gif' file
 grep "cat\|dog" file matches lines containing the word "cat" or the word "dog"
 grep "I am a \(cat\|dog\)" matches lines containing the string "I am a cat" or the string "I am a dog"
 grep "Fred\(eric\)\? Smith" file   # grep fred or frederic
+```
+
 # grep back references (memory)
+
+``` zsh
 grep -i "<H\([1-6]\).*</H\1>" *.html # matches pairs of tags
 tel blenkinsop | grep -o "[[:alnum:][:graph:]]*@[[:alnum:][:graph:]]*" # filter just an email address from a text stream (not zsh)   
+```
 
 #  ls
-ls *.h`(fred|foo).h # same thing
-ls (x*`x[3-5])   # list files x* except x3 to x5
-ls *[^2].php`*template*  # list files with 2nd filter
-ls (xx|yy)       # list xx or yy
-ls *.(jpg|gif)   # list graphic files
-ls fred{joe,sid}.pl
-ls fred{09..13}.pl # range
-ls fred<76-88>.pl# list all files fred76.pl to fred88.pl range
-ls fred<76->.pl  # list all files fred76.pl to fred9999*.pl etc
-ls {_,}fred.php  # list files _fred.php fred.php 
-ls (_|)fred.php  # same effect by globbing
-ls *.{jpg,gif}(.N) # don't break if one or other image type absent
-# FNG optionally matching a character 
-ls -l *y{2,}.cfm  #  matches *y.cfm and *y2.cfm 
-ls -l *y(2|).cfm  #  matches *y.cfm and *y2.cfm 
-ls *{y2,y}.cfm    #  matches *y.cfm and *y2.cfm 
-ls *y2#.cfm       #  matches *y.cfm and *y2.cfm 
-ls foot(fall)#.pl #  match option string fall
 
+ls command | comment
+--- | ---
+`ls \*.h`(fred|foo).h` | same thing
+`ls (x\*`x[3-5])  ` | list files x\* except x3 to x5
+`ls *[^2].php`\*template\* ` | list files with 2nd filter
+`ls (xx|yy)      ` | list xx or yy
+`ls *.(jpg|gif)  ` | list graphic files
+`ls fred{joe,sid}.pl` | 
+`ls fred{09..13}.pl` | range
+`ls fred<76-88>.pl` | list all files fred76.pl to fred88.pl range
+`ls fred<76->.pl ` | list all files fred76.pl to fred9999*.pl etc
+`ls {_,}fred.php ` | list files _fred.php fred.php 
+`ls (_|)fred.php ` | same effect by globbing
+`ls *.{jpg,gif}(.N)` | don't break if one or other image type absent
+`# FNG optionally matching a character 
+`ls -l *y{2,}.cfm ` |  matches *y.cfm and *y2.cfm 
+`ls -l *y(2|).cfm ` |  matches *y.cfm and *y2.cfm 
+`ls *{y2,y}.cfm   ` |  matches *y.cfm and *y2.cfm 
+`ls *y2#.cfm      ` |  matches *y.cfm and *y2.cfm 
+`ls foot(fall)#.pl` |  match option string fall
+
+``` zsh
 setopt no_case_glob  # set ignore case for ls etc
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'   # case insensitive completion for cd etc 
+```
 
 #  Globbing modifiers
-# :e just the suffix  (Extension)
-# :r removes the suffix  (Remove)
-# :t takes away the path (Tail)
-# :h takes away one level (Head)
-# :a adds full Path (Add)
-# . means must be regular files not directories etc
-# *(om[1]) picks most recently modified file
-# (.N) no warning message if any file absent
+
+``` zsh
+:e just the suffix  (Extension)
+:r removes the suffix  (Remove)
+:t takes away the path (Tail)
+:h takes away one level (Head)
+:a adds full Path (Add)
+. means must be regular files not directories etc
+*(om[1]) picks most recently modified file
+(.N) no warning message if any file absent
 ls (#i)*.pmm     # case insensitive globbing (note exact syntax)
 ls *(.[2])       # second file in list 
 ls *(om[1])      # print the most recent file
@@ -402,34 +476,43 @@ ls -ltd *(mh0)    # list files modified only in last hour
 ls *.{aux,dvi,log,toc} # rm latex temp files  
 rm ./*(Om[1,-11])# removes all files but the ten newest ones (delete all but last 10 files in a directory)
 mv *.*(^m-1) old/ # move all but today's files to sub-directory archive older files 
+```
 
 #  exact dates (N)
+
+``` zsh
 ls -l *.*(mM4)
 autoload -U age
 ls -tl *.*(e#age 2014/06/01 now#)
 ls -tl *(.e#age 2014/06/01 2014/06/30#)
 ls [01]<->201[45]/Daily\ report*.csv(e#age 2014/10/22 now#)
-
 files=(${(f)"$(ls *$**)"}(.N))   # store matching files 
-
 ls *(n:t)        # order by name strip directory
 ls **/*(On:t)    # recursive reverse order by name, strip directory
 ls PHP*/**/*.php # recursive but only for subdirectories PHP*
 ls *.c(:r)       # strip suffix
 ls **/*(.)       # only files no directories (.) means files only
 ls -ld *(/)      # list only directories
-
+```
 #  Oddities
+
+``` zsh
 chmod g+w **/*  # group write
 [[ FOO = (#i)foo ]]  # case insensitive matching
 fred=$((6**2 + 6))      # can do maths
 : > /apache/access.log  # truncate a log file
+```
 
 #  arrays
+
+``` zsh
 X=(x1 x2)               # create an array
 print -C 1 $X           # print each array element on it's own line
+```
 
-#  2 dimensional arrays- lookup conversion 
+# 2D arrays lookup conversion 
+
+``` zsh
 typeset -A convtable
 convtable=(151 2 152 2 153 2 158 4 159 3 160 2 171 4 172 1 173 4)
 echo $convtable[158]
@@ -442,7 +525,11 @@ filelst+=($x)           # append (push) to an array (better)
 files=(${(f)"$(egrepcmd1l)"} ) # push a sentence to an array (where egrepcmd1l is a global alias
 % print ${array:t}
 .zshenv .zshrc .zlogout
+```
+
 #  Substring extraction ${parameter:start:length} , default length is rest 
+
+``` zsh
 a=12345
 echo ${a:2:2}
 34
@@ -450,14 +537,24 @@ echo ${a:2}
 345
 echo ${a[1,3]}
 123
+```
 
 #  zsh zingers
+
+``` zsh
 alias -g NF='*(.om[1])' # newest file
+```
+
 # parse xml file putting each tag on a new line
+
+``` zsh
 perl -ne 's/(<\/\w+>)/$1\n/g; print' < NF > $(print NF).txt
 cat NF > $(print NF).txt
+```
 
 #  Variable substitution
+
+``` zsh
 somevar="bu&^*ck"                  # variable with mucky characters
 print ${somevar//[^[:alnum:]]/_}   # replace all non-alphanumerics with _ the // indicates global substitution 
 echo ${file##*/}                   # echo just the file name (strip the path)
@@ -483,28 +580,32 @@ print ${foo%%$'\n'}                # strip out a trailing carriage return
 url='www.some.com/some_strIng-HERe'
 anchortext=${${(C)url//[_-]/ }:t}  # titlecase 
 echo "<a href='$url'>$anchortext</a>"
+```
 
-#  Vreating a family of functions
-# generate hrefs from url
-function href{,s}
-{
-# href creates an HTML hyperlink from a URL
-# hrefs creates an HTML hyperlink from a URL with modified anchor text
-PROGNAME=`basename $0`
-url=`cat /dev/clipboard`
-if [ "$PROGNAME" = "href" ] ; then
-href="<a href='$url'>$url"
-elif [ "$PROGNAME" = "hrefs" ] ; then 
-anchortext=${${(C)url//[_-]/ }:t}
-href="<a href='$url'>$anchortext"
-fi
-echo -n $col
-echo $href > /dev/clipboard | more
+#  Creating a family of functions
+## generate hrefs from url
+
+``` zsh
+function href{,s} {
+  # href creates an HTML hyperlink from a URL
+  # hrefs creates an HTML hyperlink from a URL with modified anchor text
+  PROGNAME=`basename $0`
+  url=`cat /dev/clipboard`
+  if [ "$PROGNAME" = "href" ] ; then
+  href="<a href='$url'>$url"
+  elif [ "$PROGNAME" = "hrefs" ] ; then 
+  anchortext=${${(C)url//[_-]/ }:t}
+  href="<a href='$url'>$anchortext"
+  fi
+  echo -n $col
+  echo $href > /dev/clipboard | more
 }
+```
 
-#  Regular expressions in zsh  examples 
-#pcre perl regular expressions   
+#  Regular expressions in zsh examples 
+pcre perl regular expressions   
 
+``` zsh
 zmodload zsh/pcre
 setopt REMATCH_PCRE
 
@@ -512,7 +613,7 @@ var=ddddd; [[ "$var" =` ^d+$ ]] && echo matched || echo did not match
 [[ 'cell=456' =` '(cell)=(\d+)' ]] && echo  $match[1,2] $MATCH 
 
 var=dddee; regexp="^e+$"; [[ "$var" =` $regexp ]] && echo $regexp matched $var || echo $regexp did not match $var
-
+```
 
 #  Decisions
 # cd to different drive depending on Windows login name
