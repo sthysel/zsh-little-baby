@@ -2,13 +2,13 @@
 
 !(https://www.youtube.com/watch?v=nl2ooOxDCjY)
 
-Converted to org from http://www.zzapper.co.uk/zshtips.html
+Converted to md from http://www.zzapper.co.uk/zshtips.html
 
-* Global aliases
- Alias                     | Description
+# Global aliases
+Alias                     | Description
 ---------------------------+------------------
- `alias -g ND='*(/om[1])'` | newest directory 
- `alias -g NF='*(.om[1])'` | newest file
+`alias -g ND='*(/om[1])'` | newest directory 
+`alias -g NF='*(.om[1])'` | newest file
 
 Example of use
 ```
@@ -17,24 +17,23 @@ $ cat NF > $(print NF).txt
 ```
 
 # Listing 
-| Command                    | Description                                              |
-|----------------------------+----------------------------------------------------------|
-| `ls *(.)`                  | list just regular files                                  |
-| `ls -d *(/)`               | list just directories                                    |
-| `ls (x*`x[3-5])`           | list files x* except x3 to x5                            |
-| `ls x^[3-5]*`              | list files x* except x3 to x5                            |
-| `ls *(.[3])`               | third file                                               |
-| `ls **/*`*/.git/*`         | ignore all git subdirectories *`* matches a path         |
-| `vi *(.om[1])`             | vi newest file                                           |
-| `vi *`ssver.scc(.om[1]) &` | newest file ignoring any vssver.scc                      |
-| `vi !$`                    | vi last parameter                                        |
-| `vi !-2:2`                 | second parameter of second but last command              |
-| `vi !$:r.py`               | vi last parameter but change extension to .py            |
-| `^php^cfm`                 | modify previous command (good for correcting spellos)    |
-| `ls *(.L0)`                | list pesky empty files (yes that is a zero)              |
-| `ls -l *(L-2)`             | list file size less than 2 bytes                         |
-| `ls -l *(.L-20)`           | list file size less than 20 bytes - . ignore directories |
-
+Command                    | Description                                            
+----------------------------+-------------------------------------------------------|
+`ls *(.)`                  | list just regular files                                
+`ls -d *(/)`               | list just directories                                  
+`ls (x*`x[3-5])`           | list files x* except x3 to x5                          
+`ls x^[3-5]*`              | list files x* except x3 to x5                          
+`ls *(.[3])`               | third file                                             
+`ls **/*`*/.git/*`         | ignore all git subdirectories *`* matches a path       
+`vi *(.om[1])`             | vi newest file                                         
+`vi *`ssver.scc(.om[1]) &` | newest file ignoring any vssver.scc                    
+`vi !$`                    | vi last parameter                                      
+`vi !-2:2`                 | second parameter of second but last command            
+`vi !$:r.py`               | vi last parameter but change extension to .py          
+`^php^cfm`                 | modify previous command (good for correcting spellos)  
+`ls *(.L0)`                | list pesky empty files (yes that is a zero)            
+`ls -l *(L-2)`             | list file size less than 2 bytes                       
+`ls -l *(.L-20)`           | list file size less than 20 bytes - . ignore directories
 
 # Listing by file size
 | Command                          | Description                                       |
