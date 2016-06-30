@@ -616,27 +616,45 @@ var=dddee; regexp="^e+$"; [[ "$var" =` $regexp ]] && echo $regexp matched $var |
 ```
 
 #  Decisions
-# cd to different drive depending on Windows login name
+cd to different drive depending on Windows login name
+
+``` zsh
 drive=$([[ "$LOGNAME" != davidr ]] && echo '/o' || echo '/c') # trad way
 cd ${drive}/inetpub/wwwdev/www.some.co.uk/
 drive=${${${LOGNAME:#davidr}:+/o}:-/c}                        # zsh way
 cd ${drive}/inetpub/wwwdev/www.some.co.uk/
+```
 
-#  Chaining two modifications 
-# .om[1] gives newest file
-# cyg is a zsh function doing a path conversion e.g. /c/ to C:/ 
+# Chaining two modifications 
+.om[1] gives newest file
+cyg is a zsh function doing a path conversion e.g. /c/ to C:/ 
+
+``` zsh
 cyg(){reply=("$(cygpath -m $REPLY)")}
 gvim.exe $(echo /c/aax/*(.om[1]))(+cyg) &  ### nested
 gvim.exe /c/aax/*(.om[1]+cyg) &            #### both operations
+```
 
-# odd stuff not necessarily zsh
+# Odd stuff not necessarily zsh
+
+``` zsh
 cp -a file1 file   # -a transfer  permissions etc of file1 to file2preserve
-# only copy if destination file exists and is older that source file
-[[ -e $L/config.php ]] && cp -p -update $T/config.php $L 
-# variable with variable name
-eval "$1=$PWD"
+```
+## only copy if destination file exists and is older that source file
 
-#  Brilliant will change your life
+``` zsh
+[[ -e $L/config.php ]] && cp -p -update $T/config.php $L 
+```
+
+## variable with variable name
+
+``` zsh
+eval "$1=$PWD"
+```
+
+## Tips
+
+``` zsh
 setopt autopushd                # 
 dirs -v                         # 
 cd `5                           # cd to fifth directory in directory stack
@@ -654,8 +672,11 @@ vi main*`*temp*<tab>         # avoid file with temp in the name
 cd /u/lo/li<tab>  completes to /usr/local/lib
 #directory sizes
 du -sk *(/)
+```
 
 #  Inline aliases, zsh -g aliases can be anywhere in command line
+
+``` zsh
 alias -g G='| grep -'
 alias -g L='| less'
 #this reduces a command like
@@ -666,69 +687,98 @@ alias -g R=' > /c/aaa/tee.txt '           # redirect
 alias -g T=' | tee /c/aaa/tee.txt '       # tee
 alias -g F=' | fmt -'                     # format
 alias -g W=' | wc -l'                     # wc
+```
 
 #  cd by .. or ... or ... or mv file ..../.
+
+``` zsh
 alias '..'='cd ..'
 alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'
+```
 
 #  Suffix based alias
+
+``` zsh
 alias -s jpg='/c/program\ files/IrfanView/i_view32.exe'
 now just type the image name to launch irfanview
 alias -s php='c:/wamp/php/php.exe'  # now just type test.php to execute it 
-# named directories (quick jump to a deep sub-directory)
-hash -d zsh="/usr/src/zsh"          # create shortcuts to deep directories  
-cd `zsh
+```
 
-#magic equals
+# named directories (quick jump to a deep sub-directory)
+
+``` zsh
+hash -d zsh="/usr/src/zsh"          # create shortcuts to deep directories
+cd `zsh
+```
+
+magic equals
+
+``` zsh
 vim =some_file                            # edits file anywhere in $PATH
 ls =some_file                             # lists file anywhere in $PATH
-#magic ** (recursion)
+# magic ** (recursion)
 vim **/some_file                          # edits file under under current dir
 rm /c/intranet/**/*.stackdump             # specify recursion at a sub-directory 
 # modifying more than one file (multios)
 # writes ls results to file1 & file2 appends to file3
 ls > file1 > file2 >> file3 | wc          # multi-io
 myscript >&1 >output.txt                  # log a script output
-#Redirection to file as well as send on to pipe:
+```
+
+Redirection to file as well as send on to pipe:
 make install > /tmp/logfile | grep -i error
 
 #  Permissions & ownership 
+
+``` zsh
 ls *(.f644)                            # files with permissions 644
 ls *(.g:root:)                            # files belonging to group root
 ls *(.u:apache:)                            # files belonging to user apache
 ls -l *(.rwg:nobody:u:root:)              # user has read/write permissions
 
 function g{0..9} { gmark $0 $* }          # declaring multiple functions
+```
 
 #  zmv "programmable rename"
 autoload -U zmv
 
-#  Replace spaces in filenames with a underline
+# Replace spaces in filenames with a underline
+
+``` zsh
 zmv '* *' '$f:gs/ /_'
 zmv '(* *)' '${1// /}'
 zmv -Q "(**/)(* *)(D)" "\$1\${2// /_}"
+```
 
 #  Change the suffix from *.sh to *.pl
 zmv -W '*.sh' '*.pl'
 
 #  Lowercase/uppercase all files/directories (-i) interactive
+
+``` zsh
 $ zmv -i '(*)' '${(L)1}' # lowercase
 $ zmv -i '(*)' '${(U)1}' # uppercase
 $ zmv '([a-z])(*).txt' '${(C)1}$2.txt' ; rename fred.txt to Fred.txt
+```
 
 #  Initialize zsh/config 
 autoload -U compinit
 compinit
 
 #  case insensitive completion
+
+``` zsh
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' \
      'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+```
 
 #Wonderful zftp (write ftp scripts as though shell)
 
 #  init (could be in .zshenv etc)
+
+``` zsh
 autoload -U zfinit  
 zfinit  
 zfparams www.someweb.co.uk myuserid mypassword
@@ -737,24 +787,39 @@ zfcd tips
 zfls -l zshtips.html
 zfput zshtips.html
 zfls -l zshtips.html
+```
 
 #  replace every occurence of a file (zsh and bash)
+
+``` zsh
 for f in */include/dbcommon.php; do;cp dbcommon.php $f; done
-# alternative for loop
-# replace every instance of file with new version
+```
+
+alternative for loop
+replace every instance of file with new version
+
+``` zsh
 for f (**/x) cp newx $f  
 for f (**/x) {cp newx $f } 
 for f in **/x; do;cp newx $f; done
+```
 
 #  create a clone of a file, modifying it on the fly 
+
+``` zsh
 for i in {3,4}; sed s/flag=2/flag=$i/ fred.txt > fred$i.txt
 for i in {1..9}; sed s/flag=2/flag=$i/ fred.txt > fred$i.txt
-# can be simplified to 
+```
+
+can be simplified to 
+
+``` zsh
 for f (*.txt) { echo $f }
 for f (*.txt) echo $f   # if no ;
 for f (*(.)) mv $f fixed_$f
 for f (*.csv.csv) {mv $f ${f:r}} # remove one level of extension 
 for x ( 1 2 {7..4} a b c {p..n} *.php) {echo $x} 
+```
 
 #  loop a command 
 while true; do echo "infinite loop"; sleep 5; done
