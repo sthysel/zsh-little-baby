@@ -4,7 +4,9 @@
 " target="_blank"><img src="http://img.youtube.com/vi/nl2ooOxDCjY/0.jpg"
 alt="Tim" width="400" height="260" border="10" /></a>
 
-Converted to md from http://www.zzapper.co.uk/zshtips.html
+[Reflow to md from zapper with extra broken](http://www.zzapper.co.uk/zshtips.html)
+
+Here be a smorgasboard of random zsh notes.
 
 # Global aliases
 Alias                    | Description
