@@ -5,18 +5,18 @@
 Converted to org from http://www.zzapper.co.uk/zshtips.html
 
 * Global aliases
-| Alias                     | Description      |
-|---------------------------+------------------|
-| `alias -g ND='*(/om[1])'` | newest directory |
-| `alias -g NF='*(.om[1])'` | newest file      |
+ Alias                     | Description
+---------------------------+------------------
+ `alias -g ND='*(/om[1])'` | newest directory 
+ `alias -g NF='*(.om[1])'` | newest file
 
 Example of use
-#+BEGIN_SRC shell
+```
 $ cp NF ND          # copy newest file to newest directory
 $ cat NF > $(print NF).txt 
-#+END_SRC
+```
 
-* Listing 
+# Listing 
 | Command                    | Description                                              |
 |----------------------------+----------------------------------------------------------|
 | `ls *(.)`                  | list just regular files                                  |
@@ -36,7 +36,7 @@ $ cat NF > $(print NF).txt
 | `ls -l *(.L-20)`           | list file size less than 20 bytes - . ignore directories |
 
 
-* Listing by file size
+# Listing by file size
 | Command                          | Description                                       |
 |----------------------------------+---------------------------------------------------|
 | `ls -l *(Lk+100)`                | list file size larger/greater than 100kb          |
@@ -761,7 +761,6 @@ print ${${(Cs:-:):-fred-goat-dog.jpg}%.*}
 #" read a file into a variable
 var="$(<file)"
 ```
-
 # zsh Syntax synopis
 | Command                                                  | Description                                                      |
 |----------------------------------------------------------+------------------------------------------------------------------|
