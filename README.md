@@ -555,29 +555,31 @@ cat NF > $(print NF).txt
 
 #  Variable substitution
 
-``` zsh
-somevar="bu&^*ck"                  # variable with mucky characters
-print ${somevar//[^[:alnum:]]/_}   # replace all non-alphanumerics with _ the // indicates global substitution
-echo ${file##*/}                   # echo just the file name (strip the path)
-echo ${texfilepath%/*.*}           # echo just the path (strip the file name)
-echo ${file%.*}                    # strip file extension
-echo $file:r                       # strip file extension
-echo ${0##*[!0-9]}                 # strip all but trailing digit from filename $0
-echo ${(M)0%%<->}                  # strip all but trailing digit from filename
-file=${1/\//C:\/}                  # substitute / with c:/ ANYWHERE in string
-file=${1/#\//C:\/}                 # substitute / with c:/ Beginning of string
-file=${1/%\//C:\/}                 # substitute / with c:/ End of string
-                                   # note # & % are using to match beginning and end
-JUNK=R.E.M.                        # substitute last . for a _
-print ${JUNK/.(#e)/_}              # substitute last . for a _
-print ${JUNK/%./_}                 # substitute last . for a _
-wpath=${wpath//\//\\\\}            # substitute Unix / with dos \ slashes
-upath=${wpath//\\/\/}              # convert backslashes to forward slashes (Dos to Unix
-dpath=${upath/#\/c\//c:/}          # convert /c/path/ to c:\path\
-foo=$'bar\n\nbaz\n'
-print ${foo//$'\n'}                # strip out any carriage returns (some systems use \r)
-print ${foo%%$'\n'}                # strip out a trailing carriage return
+Variable | Description
+--- | ---
+`somevar="bu&^*ck"               `  | variable with mucky characters
+`print ${somevar//[^[:alnum:]]/_}`  | replace all non-alphanumerics with _ the // indicates global substitution
+`echo ${file##*/}                `  | echo just the file name (strip the path)
+`echo ${texfilepath%/*.*}        `  | echo just the path (strip the file name)
+`echo ${file%.*}                 `  | strip file extension
+`echo $file:r                    `  | strip file extension
+`echo ${0##*[!0-9]}              `  | strip all but trailing digit from filename $0
+`echo ${(M)0%%<->}               `  | strip all but trailing digit from filename
+`file=${1/\//C:\/}               `  | substitute / with c:/ ANYWHERE in string
+`file=${1/#\//C:\/}              `  | substitute / with c:/ Beginning of string
+`file=${1/%\//C:\/}              `  | substitute / with c:/ End of string
+`                                `  | note # & % are using to match beginning and end
+`JUNK=R.E.M.                     `  | substitute last . for a _
+`print ${JUNK/.(#e)/_}           `  | substitute last . for a _
+`print ${JUNK/%./_}              `  | substitute last . for a _
+`wpath=${wpath//\//\\\\}         `  | substitute Unix / with dos \ slashes
+`upath=${wpath//\\/\/}           `  | convert backslashes to forward slashes (Dos to Unix
+`dpath=${upath/#\/c\//c:/}       `  | convert /c/path/ to c:\path\
+`foo=$'bar\n\nbaz\n'             `
+`print ${foo//$'\n'}             `  | strip out any carriage returns (some systems use \r)
+`print ${foo%%$'\n'}             `  | strip out a trailing carriage return
 
+``` zsh
 url='www.some.com/some_strIng-HERe'
 anchortext=${${(C)url//[_-]/ }:t}  # titlecase
 echo "<a href='$url'>$anchortext</a>"
