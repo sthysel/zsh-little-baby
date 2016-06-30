@@ -1,8 +1,10 @@
 # zsh little dev
 
-![pics/tim.png]
 
-[https://www.youtube.com/watch?v=nl2ooOxDCjY]
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=nl2ooOxDCjY
+" target="_blank"><img src="http://img.youtube.com/vi/nl2ooOxDCjY/0.jpg" 
+alt="Tim" width="400" height="260" border="10" /></a>
+
 
 Converted to md from http://www.zzapper.co.uk/zshtips.html
 
