@@ -354,7 +354,7 @@ zargs **/*.(php|inc) -- sed -i 's#ereg_replace("\([^"]*\)"#preg_replace("/\1/"#g
 ls ^x*           # list all but x*
 ```
 
-#  list all files without an extension ( no dot)
+#  list all files without an extension (dotless)
 
 ``` zsh
 a=(**/*(.D));echo $#a  # count files in a (huge) hierarchy
@@ -437,71 +437,72 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:
 
 #  Globbing modifiers
 
-``` zsh
-:e just the suffix  (Extension)
-:r removes the suffix  (Remove)
-:t takes away the path (Tail)
-:h takes away one level (Head)
-:a adds full Path (Add)
-. means must be regular files not directories etc
-*(om[1]) picks most recently modified file
-(.N) no warning message if any file absent
-ls (#i)*.pmm     # case insensitive globbing (note exact syntax)
-ls *(.[2])       # second file in list
-ls *(om[1])      # print the most recent file
-cp *(om[1])<TAB> # will complete file name
-ls *(.om[1])     # print the most recent file (not directory)
-ls -l *(Om[1])   # oldest file
-mv  *(.om[2,$]) old/   # move all but newest file
-ls -lt **/*.txt(D.om[1,5]) # list 5 most recent files in hierarchy
-# list 5 most recent files in each sub-directory
-dirs=( '' **/*(DM/) ) eval 'ls ${^dirs}*(ND.om[1,5])'
-ls {^dev*,}/index.php(.N) # ignore directories beginning dev*
-ls (dev*|fred*|joe*)/index* # does not break if no matches
-ls **/index.php`dev*(/*)##   # ignore subdirectories dev* multi-level
-vi *(.om[1]^D)   # vi newest file ^D means switch off GLOB_DOTS ie ignore dot files
-ls *.txt(.om[1]) # ls newest *.txt file
-ls -tld **/*(m-2)# list files modified in last 2 days in hierarchy
-ls *(.om[1,5])    # print the 5 most recent files
-ls *(.Om[1,5])    # print the 5 oldest files
-ls -l *(m4)      # list files modified exactly 4 days ago
-ls -ltd *(mw3)   # list files 3 weeks old
-ls -1ld *([1,10])# list just 10 files one per line , no directories
-ls *(m-1)        # files modified today
-ls *(m0)         # files modified today
-ls *(^m0)        # files NOT modified today
-vi *(m0)         # re-edit all files changed today!
-cp *.mp3(mh-4) /tmp # copy files less than 4 hours old
-ls -ltd *(mh0)    # list files modified only in last hour
-ls *.{aux,dvi,log,toc} # rm latex temp files
-rm ./*(Om[1,-11])# removes all files but the ten newest ones (delete all but last 10 files in a directory)
-mv *.*(^m-1) old/ # move all but today's files to sub-directory archive older files
-```
+Modifier | Description
+--- | ---
+:e | just the suffix  (Extension)
+:r |  removes the suffix  (Remove)
+:t |  takes away the path (Tail)
+:h |  takes away one level (Head)
+:a |  adds full Path (Add)
+. | means must be regular files not directories etc
+\*(om[1]) | picks most recently modified file
+(.N) | no warning message if any file absent
+ls (#i)\*.pmm    | case insensitive globbing (note exact syntax)
+`ls *(.[2])`       | second file in list
+`ls *(om[1]) `     | print the most recent file
+`cp *(om[1])<TAB>` | will complete file name
+`ls *(.om[1]) `    | print the most recent file (not directory)
+`ls -l *(Om[1]) `  | oldest file
+`mv  *(.om[2,$]) old/ `  | move all but newest file
+`ls -lt **/*.txt(D.om[1,5])` | list 5 most recent files in hierarchy
+`dirs=( '' **/*(DM/) ) eval 'ls ${^dirs}*(ND.om[1,5])' | list 5 most recent files in each sub-directory
+`ls {^dev*,}/index.php(.N) `| ignore directories beginning dev*
+`ls (dev*|fred*|joe*)/index* `| does not break if no matches
+`ls **/index.php`dev*(/*)## `  | ignore subdirectories dev\* multi-level
+`vi *(.om[1]^D) `  | vi newest file ^D means switch off GLOB_DOTS ie ignore dot files
+`ls *.txt(.om[1]) ` | ls newest *.txt file
+`ls -tld **/*(m-2) ` | list files modified in last 2 days in hierarchy
+`ls *(.om[1,5])`    | print the 5 most recent files
+`ls *(.Om[1,5]) `   | print the 5 oldest files
+`ls -l *(m4) `     | list files modified exactly 4 days ago
+`ls -ltd *(mw3) `  | list files 3 weeks old
+`ls -1ld *([1,10]) ` | list just 10 files one per line , no directories
+`ls *(m-1) `       | files modified today
+`ls *(m0) `        | files modified today
+`ls *(^m0) `       | files NOT modified today
+`vi *(m0) `        | re-edit all files changed today!
+`cp *.mp3(mh-4) /tmp `| copy files less than 4 hours old
+`ls -ltd *(mh0) `   | list files modified only in last hour
+`ls *.{aux,dvi,log,toc} `| rm latex temp files
+`rm ./*(Om[1,-11]) `| removes all files but the ten newest ones (delete all but last 10 files in a directory)
+`mv \*.\*(^m-1) old/ `| move all but today's files to sub-directory archive older files
+
 
 #  exact dates (N)
 
-``` zsh
-ls -l *.*(mM4)
-autoload -U age
-ls -tl *.*(e#age 2014/06/01 now#)
-ls -tl *(.e#age 2014/06/01 2014/06/30#)
-ls [01]<->201[45]/Daily\ report*.csv(e#age 2014/10/22 now#)
-files=(${(f)"$(ls *$**)"}(.N))   # store matching files
-ls *(n:t)        # order by name strip directory
-ls **/*(On:t)    # recursive reverse order by name, strip directory
-ls PHP*/**/*.php # recursive but only for subdirectories PHP*
-ls *.c(:r)       # strip suffix
-ls **/*(.)       # only files no directories (.) means files only
-ls -ld *(/)      # list only directories
-```
+Command | Description
+--- | ---
+`ls -l \*.\*(mM4) | 
+`autoload -U age i`
+`ls -tl *.*(e#age 2014/06/01 now#)` | 
+`ls -tl *(.e#age 2014/06/01 2014/06/30#) ` |
+`ls [01]<->201[45]/Daily\ report*.csv(e#age 2014/10/22 now#) `|
+`files=(${(f)"$(ls \*$\*\*)"}(.N))` | store matching files
+`ls *(n:t) `       | order by name strip directory
+`ls **/*(On:t) `    | recursive reverse order by name, strip directory
+`ls PHP*/**/*.php `| recursive but only for subdirectories PHP*
+`ls *.c(:r) `      | strip suffix
+`ls **/*(.) `      | only files no directories (.) means files only
+`ls -ld *(/) `     | list only directories
+
 #  Oddities
 
-``` zsh
-chmod g+w **/*  # group write
-[[ FOO = (#i)foo ]]  # case insensitive matching
-fred=$((6**2 + 6))      # can do maths
-: > /apache/access.log  # truncate a log file
-```
+Command | Description
+--- | ---
+chmod g+w **/*  |  group write
+[[ FOO = (#i)foo ]]  | case insensitive matching
+fred=$((6**2 + 6))      | can do maths
+: > /apache/access.log  | truncate a log file
 
 #  arrays
 
