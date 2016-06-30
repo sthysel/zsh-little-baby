@@ -1,6 +1,7 @@
 # zsh little dev
 
-![Shhh](https://www.youtube.com/watch?v=nl2ooOxDCjY)
+![pics/tim.png]
+[https://www.youtube.com/watch?v=nl2ooOxDCjY]
 
 Converted to md from http://www.zzapper.co.uk/zshtips.html
 
