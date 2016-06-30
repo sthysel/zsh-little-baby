@@ -568,7 +568,6 @@ Variable | Description
 `file=${1/\//C:\/}               `  | substitute / with c:/ ANYWHERE in string
 `file=${1/#\//C:\/}              `  | substitute / with c:/ Beginning of string
 `file=${1/%\//C:\/}              `  | substitute / with c:/ End of string
-`                                `  | note # & % are using to match beginning and end
 `JUNK=R.E.M.                     `  | substitute last . for a _
 `print ${JUNK/.(#e)/_}           `  | substitute last . for a _
 `print ${JUNK/%./_}              `  | substitute last . for a _
@@ -592,13 +591,15 @@ echo "<a href='$url'>$anchortext</a>"
 function href{,s} {
   # href creates an HTML hyperlink from a URL
   # hrefs creates an HTML hyperlink from a URL with modified anchor text
-  PROGNAME=`basename $0`
-  url=`cat /dev/clipboard`
-  if [ "$PROGNAME" = "href" ] ; then
-  href="<a href='$url'>$url"
-  elif [ "$PROGNAME" = "hrefs" ] ; then
-  anchortext=${${(C)url//[_-]/ }:t}
-  href="<a href='$url'>$anchortext"
+  PROGNAME=$(basename $0)
+  url=$(cat /dev/clipboard)
+  if [ "$PROGNAME" = "href" ]
+  then
+      href="<a href='$url'>$url"
+  elif [ "$PROGNAME" = "hrefs" ]
+  then
+      anchortext=${${(C)url//[_-]/ }:t}
+      href="<a href='$url'>$anchortext"
   fi
   echo -n $col
   echo $href > /dev/clipboard | more
