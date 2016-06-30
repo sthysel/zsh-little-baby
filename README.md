@@ -660,25 +660,25 @@ eval "$1=$PWD"
 
 ## Tips
 
-``` zsh
-setopt autopushd                #
-dirs -v                         #
-cd `5                           # cd to fifth directory in directory stack
+Tip | Decription
+--- | ---
+setopt autopushd                 | 
+dirs -v                          | 
+cd `5                            |  cd to fifth directory in directory stack
 cd -<tab complete> then type number of directory needs compinit
-dirs -p                         # display recent directories
-cp file `1                      # where 1 is first entry in pushd stack
-cp file.txt `+<TAB>          # select recent directory
-ls -1 `1/*(.om[1])              # newest file previous directory
-ls -l  `-/*(.m0)                # alternative previous directory `-
-pushd +2                        # cd to 3rd entry in pushd stack
-#zsh completion
-startfilename<tab>           # will complete matching files anywhere in $PATH
-startfilename<C-D>           # will list matching files anywhere in $PATH
-vi main*`*temp*<tab>         # avoid file with temp in the name
-cd /u/lo/li<tab>  completes to /usr/local/lib
-#directory sizes
-du -sk *(/)
-```
+dirs -p                          |  display recent directories
+cp file `1                       |  where 1 is first entry in pushd stack
+cp file.txt `+<TAB>           |  select recent directory
+ls -1 `1/*(.om[1])               |  newest file previous directory
+ls -l  `-/*(.m0)                 |  alternative previous directory `-
+pushd +2                         |  cd to 3rd entry in pushd stack
+
+## zsh completion
+startfilename<tab>            |  will complete matching files anywhere in $PATH
+startfilename<C-D>            |  will list matching files anywhere in $PATH
+vi main*`*temp*<tab>          |  avoid file with temp in the name
+cd /u/lo/li<tab>   | completes to /usr/local/lib
+du -sk *(/) | directory sizes
 
 #  Inline aliases, zsh -g aliases can be anywhere in command line
 
@@ -738,14 +738,13 @@ make install > /tmp/logfile | grep -i error
 
 #  Permissions & ownership
 
-``` zsh
-ls *(.f644)                            # files with permissions 644
-ls *(.g:root:)                            # files belonging to group root
-ls *(.u:apache:)                            # files belonging to user apache
-ls -l *(.rwg:nobody:u:root:)              # user has read/write permissions
-
-function g{0..9} { gmark $0 $* }          # declaring multiple functions
-```
+Permission | Description
+--- | ---
+`ls *(.f644)                  `  |  files with permissions 644
+`ls *(.g:root:)               `  |   files belonging to group root
+`ls *(.u:apache:)             `  |   files belonging to user apache
+`ls -l *(.rwg:nobody:u:root:) `  |    user has read/write permissions
+`function g{0..9} { gmark $0 $*  }  ` | declaring multiple functions
 
 #  zmv "programmable rename"
 autoload -U zmv
@@ -759,7 +758,10 @@ zmv -Q "(**/)(* *)(D)" "\$1\${2// /_}"
 ```
 
 #  Change the suffix from *.sh to *.pl
+
+``` zsh
 zmv -W '*.sh' '*.pl'
+```
 
 #  Lowercase/uppercase all files/directories (-i) interactive
 
@@ -822,7 +824,7 @@ can be simplified to
 ``` zsh
 for f (*.txt) { echo $f }
 for f (*.txt) echo $f   # if no ;
-for f (*(.)) mv $f fixed_$f
+<!-- for f (*(.)) mv $f fixed_$f -->
 for f (*.csv.csv) {mv $f ${f:r}} # remove one level of extension
 for x ( 1 2 {7..4} a b c {p..n} *.php) {echo $x}
 ```
