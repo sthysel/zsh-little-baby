@@ -1,10 +1,8 @@
 # zsh little dev
 
-
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=nl2ooOxDCjY
 " target="_blank"><img src="http://img.youtube.com/vi/nl2ooOxDCjY/0.jpg" 
 alt="Tim" width="400" height="260" border="10" /></a>
-
 
 Converted to md from http://www.zzapper.co.uk/zshtips.html
 
@@ -101,20 +99,20 @@ Command | Description |
 !1 | oldest command in your history
 !! | previous command
 !-2 | command before last
-!$ (last argument of previous command)
-!$:h (last argument, strip one level)
-!$:h:h (last argument, strip two levels)
-!?echo
-echo !* !!:* (all parameters)
-echo !$ !!:$ (last parameter)
-echo !^ !:1 !!:1 (first previous parameter)
+!$ | last argument of previous command 
+!$:h  | last argument, strip one level 
+!$:h:h  | last argument, strip two levels
+!?echo | 
+echo !* !!:* | all parameters 
+echo !$ !!:$  | last parameter
+echo !^ !:1 !!:1 | first previous parameter
 echo !:2-3   | echo previous parameters 2 to 3 
 echo !:2*    | echo previous parameters 2 onwards  
 echo !:2-    | echo previous parameters 2 onwards omitting last 
 echo !:-3    | echo first 3 previous parameters
 echo !-2:2 | second parameter of second but last command
 touch 1 2 3    | 
-!!:0 !^ !:2 !$ !#$ !#:2 !#1 !#0   |  *U*
+!!:0 !^ !:2 !$ !#$ !#:2 !#1 !#0   |
 history               | View recent commands
 !42                   | Re-execute history command 42
 
@@ -133,15 +131,18 @@ echo chim |
 !42:p | also use control-R
 ^str1^str2^:G         | replace as many as possible
 
-~In all of above remember <TAB> will display changed command WITHOUT executing it~
+In all of above remember <TAB> will display changed command WITHOUT executing it
+
+Command | Description 
+------- | ------------
+cd !?ls<TAB>   | get command and parameters of a previous ls command
+cd !?ls?:\*<TAB>    | get (just) parameters of a previous ls command
 
 Command | Description |
 ------- | -------------|
-cd !?ls<TAB>   | get command and parameters of a previous ls command
-cd !?ls?:*<TAB>    | get (just) parameters of a previous ls command
-function scd(){setopt nonomatch;e=/dev/null;cd $1 &> $e||cd ${1}* &> $e||cd *$1 &> $e||cd *${1}* &> $e||echo sorry} 
-function ddump(){diff -w `dump/"$1" "$1"}   |  diff local file with new one in dump
-function cdump(){cp -p `dump/"$1" "$1"}   |  replace local file with new one in dump
+function scd(){setopt nonomatch;e=/dev/null;cd $1 &> $e||cd ${1}* &> $e||cd *$1 &> $e||cd *${1}* &> $e||echo sorry} |
+function ddump(){diff -w \`dump/"$1" "$1"}   |  diff local file with new one in dump
+function cdump(){cp -p \`dump/"$1" "$1"}   |  replace local file with new one in dump
 
 
 # Generating a command from an earlier one
@@ -158,24 +159,34 @@ If you know the history number of the line (say 5) with desired parameters you c
 and if you dont know the history number```!?saket?:s/somefile1/somefile2/```
 
 # Variable Substitution 
-s=(fred joe peter);echo ${s/(#m)*/$MATCH[1,3]} # truncate strings in an array
+
+Truncate strings in an array
+```
+s=(fred joe peter);echo ${s/(#m)*/$MATCH[1,3]}
+```
 
 # History Substitution Summary
 For CURRENT line that you are editing (the # designates current line)
 
 Remember Tab will expand the following:
 
-!#:0    command
-!#^     first parameter
-!#:1    first parameter
-!#:1-4  first 4 parameters
-!#$     last parameter
-!#*     all parameters
-!#$:s/bash/zsh perform substitution on previous parameter
+_
+Command | Description |
+------- | -------------|
+!#:0   |  command
+!#^    |  first parameter
+!#:1   |  first parameter
+!#:1-4 |  first 4 parameters
+!#$    |  last parameter
+!#*    |  all parameters
+!#$:s/bash/zsh  | perform substitution on previous parameter
 
 # Backup a file with a prefix
+
+``` zsh
 cp longfilename.php backup_!#^
 cp {,backup_}longfilename.php   # same thing
+```
 
 # Backup a file with a suffix
 cp longfilename.php !#^:r.bak
