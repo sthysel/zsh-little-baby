@@ -1,4 +1,4 @@
- # zsh little dev
+# zsh little dev
 
 !(https://www.youtube.com/watch?v=nl2ooOxDCjY)
 
