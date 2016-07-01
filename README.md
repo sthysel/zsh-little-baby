@@ -199,49 +199,50 @@ cp longfilename.php !#^:r.bak
 ```
 expands to cp longfilename.php longfilename.bak
 
-```
+``` zsh
 cp longfilename.{php,bak}
 ```
 
 # For Previous Command (for comparison)
 Command | Description |
 ------- | -------------|
-!-1   |   repeat whole command
-!!    |   repeat (shortcut)
-!!0   |   command
-!^    |   first parameter
-!:1   |   first parameter
-!:1-4 |   first 4 parameters
-!:-4  !:0-4 |  first 4 parameters plus command
-!!-   |  all but last parameter
-!51$  |  last parameter of history entry 51
-!$    |  last parameter
-!*    |  all parameters
-!!:s/bash/zsh | or ^bash^zsh
-!^:t   |  just file name of first parameter
-!$:h   |  just path of last parameter
-!-2$:r |  just file name without extension of first parameter
+``!-1  `` |   repeat whole command
+``!!   `` |   repeat (shortcut)
+``!!0  `` |   command
+``!^   `` |   first parameter
+``!:1  `` |   first parameter
+``!:1-4`` |   first 4 parameters
+``!:-4  !:0-4 ``|  first 4 parameters plus command
+``!!-  `` |  all but last parameter
+``!51$ `` |  last parameter of history entry 51
+``!$   `` |  last parameter
+``!*   `` |  all parameters
+``!!:s/bash/zsh `` or ``^bash^zsh`` | 
+``!^:t ``  |  just file name of first parameter
+``!$:h ``  |  just path of last parameter
+``!-2$:r ``|  just file name without extension of first parameter
 
 For last but one command
 Command | Description |
 ------- | -------------|
-!-2    | repeat last but one command
-!-2^   | first parameter last but one command
-!-2$   | last parameter last but one command
-!-2:2  | second parameter of second but last command
-!-2:s/bash/zsh | etc
+``!-2  ``  | repeat last but one command
+``!-2^ ``  | first parameter last but one command
+``!-2$ ``  | last parameter last but one command
+``!-2:2``  | second parameter of second but last command
+``!-2:s/bash/zsh ``| etc
 
 For history command 42
 `!42`
 
-
-!:0 is the previous command name
-!^, !:2, !:3, !$ are the arguments
-!* is all the arguments
-!-2, !-3,  are earlier commands
-!-2^, !-2:2, !-2$, !-2* are earlier parameters
+``!:0`` is the previous command name
+``!^, !:2, !:3, !$ ``are the arguments
+``!* `` is all the arguments
+``!-2, !-3,``  are earlier commands
+``!-2^, !-2:2, !-2$, !-2* `` are earlier parameters
 
 # recall/step through previous parameters
+
+``` zsh
 ls /
 fred='/bin/path/fred.txt'
 echo ${fred:e}
@@ -251,6 +252,7 @@ echo ${fred:h}
 echo ${fred:h:h}
 echo ${fred:t:r}
 cd !$:h  (remove file name)
+```
 
 # cd to directory containing report.php
 
@@ -269,22 +271,22 @@ $ for i in **/*.gif; convert $i $i:r.jpg
 
 Command | Description
 ------- | -------------
-[[ 0 = 0 ]] && echo eq \|\| echo neq |
-[[ 1 = 0 ]] && echo eq  \|\| echo neq |
-if [ $# -gt 0 ];then string=$\*;else;string=$(getclip);fi | get parameter OR paste buffer
-var=133;if [[ "$var" = <-> ]] ; then echo "$var is numeric" ;fi
-if [[ "$ip" = <-> ]] then | check ip address numeric
-if [[ "$1" == [0-9] ]]  | if $1 is a digit
-if (( $# == 0 )); |
-if [ $# -gt 0 ]  | parameter cnt > 0 (arguments)
-if [[ "$url" = www* ]] | begins with www
-if [ "$p1" = "end" ] \|\| [ "$p1" = "-e" ] |
-if [[ "$p2" == \*[a-zA-Z][a-zA-Z][a-zA-Z]\* ]]  | contains at least 3 letters
-if builtin cd $1 &> /dev/null ; |
-if [[ -e /c/aam/z$1 ]]  | file exists
-if [ $cnt -eq 1 ] |
-if (( ${#dirs} == 1 )); then   | count array length
-if [[ "$pwd" == *$site2* ]] |
+``[[ 0 = 0 ]] && echo eq  || echo neq`` |
+``[[ 1 = 0 ]] && echo eq  || echo neq `` |
+``if [ $# -gt 0 ];then string=$\*;else;string=$(getclip);fi `` | get parameter OR paste buffer
+``var=133;if [[ "$var" = <-> ]] ; then echo "$var is numeric" ;fi `` |
+``if [[ "$ip" = <-> ]] then `` | check ip address numeric
+``if [[ "$1" == [0-9] ]]  | if $1 `` | is a digit
+``if (( $# == 0 )); `` |
+``if [ $# -gt 0 ]  | parameter cnt > 0 (arguments)`` 
+``if [[ "$url" = www* ]] `` | begins with www
+``if [ "$p1" = "end" ] || [ "$p1" = "-e" ]`` |
+``if [[ "$p2" == *[a-zA-Z][a-zA-Z][a-zA-Z]* ]] `` | contains at least 3 letters
+``if builtin cd $1 &> /dev/null ; `` |
+``if [[ -e /c/aam/z$1 ]] `` | file exists
+``if [ $cnt -eq 1 ] `` |
+``if (( ${#dirs} == 1 )); then ``  | count array length
+``if [[ "$pwd" == *$site2* ]] `` |
 
 ``` zsh
 print ${param:&}   (last substitute)
