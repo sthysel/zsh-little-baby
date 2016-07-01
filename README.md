@@ -288,11 +288,6 @@ Command | Description
 ``if (( ${#dirs} == 1 )); then ``  | count array length
 ``if [[ "$pwd" == *$site2* ]] `` |
 
-``` zsh
-print ${param:&}   (last substitute)
-```
-
-[a-za-z]:
 
 # Directory substitution
 If you were in directory
@@ -301,15 +296,15 @@ If you were in directory
 # cd old new
 /c/inetpub/dev.somehomes.co.uk/epsystem/eppigeon/
 cd dev www
-# would put you in parallel directory
+# would put you in a parallel directory
 /c/inetpub/www.somehomes.co.uk/epsystem/eppigeon/
 ```
 
 # completion
 
-`cd /v/w/h/<tab>`
+`cd /f/b/b/<tab>`
 expands to
-`cd /var/www/html/`
+`cd /foo/bar/baz/`
 
 #  filtering the output of a command conventionally
 
@@ -322,18 +317,18 @@ print $(history -n -1|sed 's/.* //')
 ``` zsh
 print ${${(z)$(history -n -1)}[-1]}
 print ${${(z)history[$((HISTCMD-1))]}[-1]}
-gvim.exe $(history -n -1 | sed "s/^[^ ]* //;s/ .*//")
+nvim.exe $(history -n -1 | sed "s/^[^ ]* //;s/ .*//")
 print ${${(z)history[$((HISTCMD-1))]}[2]}
 ```
 
 #  Save last 4 history items to a file (without numbers)
 Command | Description
 ------- | -------------
-fc -ln -4 > /tmp/hist   | no numbers
-fc -ln 1 | grep rsync | gvim -
-fc -l -5     | 5 most recent
-fc -l 1 5   | 5 oldest
-fc -l -10 -5  | 10th newest to 5 newest
+``fc -ln -4 > /tmp/hist ``  | no numbers
+``fc -ln 1 | grep rsync `` | nvim -
+``fc -l -5 ``    | 5 most recent
+``fc -l 1 5  `` | 5 oldest
+``fc -l -10 -5 `` | 10th newest to 5 newest
 
 #  ls
 Command | Description |
@@ -342,8 +337,8 @@ Command | Description |
 `ls -ld **/*(/^F)` | recursively list any empty sub-directories
 `print **/*(/^F) \| xargs -n1 -t rmdir`  | delete empty directories
 `rmdir ./**/*(/od) 2> /dev/null` | deletes empty directories
-`autoload zargs;zargs ./**/*.{php,inc,js} -- grep -i 'cons. unit'` |   EXTENDED_GLOB
-`zargs **/*.{js,php,css}`(libs|locallibs|test|dompdf)/* -- grep console.log ` |  EXTENDED_GLOB
+`autoload zargs;zargs ./**/*.{php,inc,js} -- grep -i 'cons. unit'` |   *EXTENDED_GLOB*
+``zargs **/*.{js,php,css}`(libs|locallibs|test|dompdf)/* -- grep console.log `` |  *EXTENDED_GLOB*
 `zargs ./**/*.(php|inc|js) -- tar rvf dev2$(date '+%d-%m-%Y').tar ` |
 
 #  grep whole file structure for php files with if ($var=4) (single equals) bug
@@ -370,33 +365,26 @@ ls *`*.*(.)
 
 #  Delete all directories Pictures_of_* except Pictures_of_beautiful_flowers
 
-``` zsh
-rm -rf Pictures_of_^beautiful_flowers   # selective delete
-ls x*`(x3|x5)    # list files x* except x3 and x5
-ls **/fred*`*junk*/* # list all files fred* unless in a junk directory
-```
+``rm -rf Pictures_of_^beautiful_flowers ``  | selective delete
+``ls x*`(x3|x5) `` | list files x* except x3 and x5
+```ls **/fred*`*junk*/* ``` | list all files fred* unless in a junk directory
 
 #  grep
 Don't use egrep, grep -E is better, or even better `ag`
 single quotes stop the shell, " quotes allow shell interaction
 
-``` zsh
-grep 'host' **/(*.cfm`(ctpigeonbot|env).cfm)
-grep -i 'host' **/(*.cfm`(ctpigeonbot|env).cfm)`*((#s)|/)junk*/*(.)
-egrep -i "^ *mail\(" **/*.php
-grep "^ *mail\(" **/*.php`*junk*/*  #find all calls to mail, ignoring junk directories
-```
-
-grep '.' dot matches one character
-
-``` zsh
-grep b.g file    # match bag big bog but not boog
-```
-
-grep * matches 0 , 1 or many of previous character
-grep "b*g" file # matches g or bg or bbbbg
-grep '.*' matches a string
-grep "b.*g" file # matches bg bag bhhg bqqqqqg etc
+Command | Description
+--- | ---
+``grep 'host' **/(*.cfm`(ctpigeonbot|env).cfm) `` | 
+``grep -i 'host' **/(*.cfm`(ctpigeonbot|env).cfm)`*((#s)|/)junk*/*(.) `` |
+``egrep -i "^ *mail\(" **/*.php `` |
+``grep "^ *mail\(" **/*.php`*junk*/* `` | find all calls to mail, ignoring junk directories
+``grep '.' `` | dot matches one character
+``grep b.g file `` | match bag big bog but not boog
+``grep * `` | matches 0 , 1 or many of previous character
+``grep "b*g" file  `` | matches g or bg or bbbbg
+``grep '.*'`` | matches a string
+``grep "b.*g" file `` | matches bg bag bhhg bqqqqqg etc
 
 # grep break character is \
 
@@ -642,8 +630,8 @@ cyg is a zsh function doing a path conversion e.g. /c/ to C:/
 
 ``` zsh
 cyg(){reply=("$(cygpath -m $REPLY)")}
-gvim $(echo /c/aax/*(.om[1]))(+cyg) &  # nested
-gvim /c/aax/*(.om[1]+cyg) &            # both operations
+nvim $(echo /c/aax/*(.om[1]))(+cyg) &  # nested
+nvim /c/aax/*(.om[1]+cyg) &            # both operations
 ```
 
 # Odd stuff not necessarily zsh
@@ -873,7 +861,7 @@ do
  then
     break
  elif [[ -n "$f" ]]; then
-    gvim $f
+    nvim $f
  fi
 done
 ```
@@ -999,9 +987,9 @@ var="$(<file)"
 | `ls *(.mh3)`                                             | modified 3 hours ago                                             |
 | `ls *(.mh-3)`                                            | less than 3 hours                                                |
 | `ls *(.mh+3)`                                            | more than 3 hours                                                |
-| `gvim -p *(m0)`                                          | all files modified today                                         |
+| `nvim -p *(m0)`                                          | all files modified today                                         |
 | `mv *.*(^m-1) old/`                                      | move all but todays files to sub-directory                       |
-| `vi -p *(.om[1,3])`                                      | open 3 newest files in tabs (gvim)                               |
+| `vi -p *(.om[1,3])`                                      | open 3 newest files in tabs (nvim)                               |
 | `ls *(^m0)`                                              | files NOT modified today                                         |
 | `ls -l *(m4)`                                            | list files modified exactly 4 days ago                           |
 | ```ls `1/*(.om[1])```                                        | list newest file from previous directory needs setopt autopushcd |
