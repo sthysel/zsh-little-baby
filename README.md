@@ -88,9 +88,9 @@ Command | Description |
 ``grep -iw '$direct' report/**/*.{inc,php}``   | searching for a php variable|
 
 # Cleanup
-| Command        | Description                             |
-|--------------- | ----------------------------------------|
-| `rm **/.*.swp` | deleting  double dot files & swap files |
+ Command        | Description                             
+--------------- | ----------------------------------------
+ `rm **/.*.swp` | deleting  double dot files & swap files 
 
 
 # Use tab to complete/display history item before executing
@@ -98,7 +98,7 @@ Command | Description |
 
 Command | Description |
 ------- | -------------|
-`!1 `| oldest command in your history
+`!1` | oldest command in the history
 `!!` | previous command
 `!-2` | command before last
 `!$` | last argument of previous command
@@ -121,17 +121,17 @@ Command | Description |
 # substitute previous command
 Command | Description |
 ------- | -------------
-r oldstr=newstr |
-!!:s/fred/joe/        | edit previous command replace first fred by joe
-!!:s/fred/joe/        | Note : sadly no regexp available with :s///
-!!:gs/fred/joe/       | edit previous command replace all fred by joe
-mv Licence\ to\ Print\ Money.pdf !#^:gs/\\ //  | rename file removing spaces
-^fred^joe             | edit previous command replace fred by joe
-^str1^str2^:u:p       | replace str1 by str2 change case and just display
-echo chim |
-^chim^&-&ney-&-&-cheree | reuse LHS
-!42:p | also use control-R
-^str1^str2^:G         | replace as many as possible
+``r oldstr=newstr ``      |
+``!!:s/fred/joe/ ``       | edit previous command replace first fred by joe
+``!!:s/fred/joe/ ``       | Note : sadly no regexp available with :s///
+``!!:gs/fred/joe/ ``      | edit previous command replace all fred by joe
+``mv Licence\ to\ Print\ Money.pdf !#^:gs/\\ // `` | rename file removing spaces
+``^fred^joe ``            | edit previous command replace fred by joe
+``^str1^str2^:u:p ``      | replace str1 by str2 change case and just display
+``echo chim ``|
+``^chim^&-&ney-&-&-cheree `` | reuse LHS
+``!42:p ``| also use control-R
+``^str1^str2^:G ``        | replace as many as possible
 
 In all of above remember <TAB> will display changed command WITHOUT executing it
 
