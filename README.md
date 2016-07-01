@@ -11,8 +11,8 @@ Here be a smorgasboard of random zsh notes.
 # Global aliases
 Alias                    | Description
 ------------------------ | ----------------
-`alias -g ND='*(/om[1])'` | newest directory
-`alias -g NF='*(.om[1])'` | newest file
+`alias -g ND='\*(/om[1])'` | newest directory
+`alias -g NF='\*(.om[1])'` | newest file
 
 Example of use
 ```
