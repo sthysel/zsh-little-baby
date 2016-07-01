@@ -386,44 +386,40 @@ Command | Description
 ``grep '.*'`` | matches a string
 ``grep "b.*g" file `` | matches bg bag bhhg bqqqqqg etc
 
-# grep break character is \
+## grep break character is \
 
-``` zsh
-grep 'hello\.gif' file
-grep "cat\|dog" file matches lines containing the word "cat" or the word "dog"
-grep "I am a \(cat\|dog\)" matches lines containing the string "I am a cat" or the string "I am a dog"
-grep "Fred\(eric\)\? Smith" file   # grep fred or frederic
-```
+Command | Description
+--- | ---
+``grep 'hello\.gif' file`` |
+``grep "cat\|dog" file  `` | matches lines containing the word "cat" or the word "dog"
+``grep "I am a \(cat\|dog\)" `` | matches lines containing the string "I am a cat" or the string "I am a dog"
+``grep "Fred\(eric\)\? Smith" file `` | grep fred or frederic
 
-# grep back references (memory)
+## grep back references (memory)
 
-``` zsh
-grep -i "<H\([1-6]\).*</H\1>" *.html # matches pairs of tags
-tel blenkinsop | grep -o "[[:alnum:][:graph:]]*@[[:alnum:][:graph:]]*" # filter just an email address from a text stream (not zsh)
-```
+``grep -i "<H\([1-6]\).*</H\1>" *.html `` | matches pairs of tags
 
 #  ls
 
-ls command | comment
+Command | comment
 --- | ---
-`ls \*.h`(fred|foo).h` | same thing
-`ls (x\*`x[3-5])  ` | list files x\* except x3 to x5
-`ls *[^2].php`\*template\* ` | list files with 2nd filter
-`ls (xx|yy)      ` | list xx or yy
-`ls *.(jpg|gif)  ` | list graphic files
-`ls fred{joe,sid}.pl` |
-`ls fred{09..13}.pl` | range
-`ls fred<76-88>.pl` | list all files fred76.pl to fred88.pl range
-`ls fred<76->.pl ` | list all files fred76.pl to fred9999*.pl etc
-`ls {_,}fred.php ` | list files _fred.php fred.php
-`ls (_|)fred.php ` | same effect by globbing
-`ls *.{jpg,gif}(.N)` | don't break if one or other image type absent
-`# FNG optionally matching a character
-`ls -l *y{2,}.cfm ` |  matches *y.cfm and *y2.cfm
-`ls -l *y(2|).cfm ` |  matches *y.cfm and *y2.cfm
-`ls *{y2,y}.cfm   ` |  matches *y.cfm and *y2.cfm
-`ls *y2#.cfm      ` |  matches *y.cfm and *y2.cfm
-`ls foot(fall)#.pl` |  match option string fall
+``ls \*.h`(fred|foo).h`` | same thing
+``ls (x\*`x[3-5])  `` | list files x\* except x3 to x5
+``ls *[^2].php`\*tem`pla`te\* `` | list files with 2nd filter
+``ls (xx|yy)``  | list xx or yy
+``ls *.(jpg|gif)  `` | list graphic files
+``ls fred{joe,sid}.pl `` |
+``ls fred{09..13}.pl`` | range
+``ls fred<76-88>.pl`` | list all files fred76.pl to fred88.pl range
+``ls fred<76->.pl `` | list all files fred76.pl to fred9999*.pl etc
+``ls {_,}fred.php `` | list files _fred.php fred.php
+``ls (_|)fred.php `` | same effect by globbing
+``ls *.{jpg,gif}(.N)`` | don't break if one or other image type absent
+``ls -l *y{2,}.cfm `` |  matches *y.cfm and *y2.cfm
+``ls -l *y(2|).cfm `` |  matches *y.cfm and *y2.cfm
+``ls *{y2,y}.cfm   `` |  matches *y.cfm and *y2.cfm
+``ls *y2#.cfm      `` |  matches *y.cfm and *y2.cfm
+``ls foot(fall)#.pl`` |  match option string fall
 
 ``` zsh
 setopt no_case_glob  # set ignore case for ls etc
@@ -442,18 +438,18 @@ Modifier | Description
 . | means must be regular files not directories etc
 \*(om[1]) | picks most recently modified file
 (.N) | no warning message if any file absent
-ls (#i)\*.pmm    | case insensitive globbing (note exact syntax)
+``ls (#i)\*.pmm ``   | case insensitive globbing (note exact syntax)
 `ls *(.[2])`       | second file in list
 `ls *(om[1]) `     | print the most recent file
 `cp *(om[1])<TAB>` | will complete file name
 `ls *(.om[1]) `    | print the most recent file (not directory)
 `ls -l *(Om[1]) `  | oldest file
 `mv  *(.om[2,$]) old/ `  | move all but newest file
-`ls -lt **/*.txt(D.om[1,5])` | list 5 most recent files in hierarchy
-`dirs=( '' **/*(DM/) ) eval 'ls ${^dirs}*(ND.om[1,5])' | list 5 most recent files in each sub-directory
-`ls {^dev*,}/index.php(.N) `| ignore directories beginning dev*
-`ls (dev*|fred*|joe*)/index* `| does not break if no matches
-`ls **/index.php`dev*(/*)## `  | ignore subdirectories dev\* multi-level
+``ls -lt **/*.txt(D.om[1,5])`` | list 5 most recent files in hierarchy
+``dirs=( '' **/*(DM/) ) eval 'ls ${^dirs}*(ND.om[1,5])'``  | list 5 most recent files in each sub-directory
+``ls {^dev*,}/index.php(.N) `` | ignore directories beginning dev*
+``ls (dev*|fred*|joe*)/index* `` | does not break if no matches
+``ls **/index.php`dev*(/*)## ``  | ignore subdirectories dev\* multi-level
 `vi *(.om[1]^D) `  | vi newest file ^D means switch off GLOB_DOTS ie ignore dot files
 `ls *.txt(.om[1]) ` | ls newest *.txt file
 `ls -tld **/*(m-2) ` | list files modified in last 2 days in hierarchy
@@ -477,34 +473,34 @@ ls (#i)\*.pmm    | case insensitive globbing (note exact syntax)
 
 Command | Description
 --- | ---
-`ls -l \*.\*(mM4) | 
-`autoload -U age i`
-`ls -tl *.*(e#age 2014/06/01 now#)` | 
-`ls -tl *(.e#age 2014/06/01 2014/06/30#) ` |
-`ls [01]<->201[45]/Daily\ report*.csv(e#age 2014/10/22 now#) `|
-`files=(${(f)"$(ls \*$\*\*)"}(.N))` | store matching files
-`ls *(n:t) `       | order by name strip directory
-`ls **/*(On:t) `    | recursive reverse order by name, strip directory
-`ls PHP*/**/*.php `| recursive but only for subdirectories PHP*
-`ls *.c(:r) `      | strip suffix
-`ls **/*(.) `      | only files no directories (.) means files only
-`ls -ld *(/) `     | list only directories
+``ls -l \*.\*(mM4) `` | 
+``autoload -U age `` |
+``ls -tl *.*(e#age 2014/06/01 now#)`` | 
+``ls -tl *(.e#age 2014/06/01 2014/06/30#) `` |
+``ls [01]<->201[45]/Daily\ report*.csv(e#age 2014/10/22 now#) `` |
+``files=(${(f)"$(ls \*$\*\*)"}(.N))`` | store matching files
+``ls *(n:t) ``   | order by name strip directory
+``ls **/*(On:t) ``    | recursive reverse order by name, strip directory
+``ls PHP*/**/*.php `` | recursive but only for subdirectories PHP*
+``ls *.c(:r) ``      | strip suffix
+``ls **/*(.) ``      | only files no directories (.) means files only
+``ls -ld *(/) ``     | list only directories
 
 #  Oddities
 
 Command | Description
 --- | ---
-chmod g+w **/*  |  group write
-[[ FOO = (#i)foo ]]  | case insensitive matching
-fred=$((6**2 + 6))      | can do maths
-: > /apache/access.log  | truncate a log file
+``chmod g+w **/* `` |  group write
+``[[ FOO = (#i)foo ]]``  | case insensitive matching
+``fred=$((6**2 + 6)) ``     | can do maths
+``: > /apache/access.log``  | truncate a log file
 
 #  arrays
 
-``` zsh
-X=(x1 x2)               # create an array
-print -C 1 $X           # print each array element on it's own line
-```
+Command | Description
+--- | ---
+``X=(x1 x2) `` | create an array
+``print -C 1 $X ``  | print each array element on it's own line
 
 # 2D arrays lookup conversion
 
