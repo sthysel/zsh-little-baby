@@ -133,18 +133,18 @@ Command | Description |
 ``!42:p ``| also use control-R
 ``^str1^str2^:G ``        | replace as many as possible
 
-In all of above remember <TAB> will display changed command WITHOUT executing it
+In all of above remember <TAB> will display changed command **without** executing it
 
 Command | Description
 ------- | ------------
-cd !?ls<TAB>   | get command and parameters of a previous ls command
-cd !?ls?:\*<TAB>    | get (just) parameters of a previous ls command
+``cd !?ls<TAB>``   | get command and parameters of a previous ls command
+``cd !?ls?:\*<TAB> ``   | get (just) parameters of a previous ls command
 
 Command | Description |
 ------- | -------------|
-function scd(){setopt nonomatch;e=/dev/null;cd $1 &> $e||cd ${1}* &> $e||cd *$1 &> $e||cd *${1}* &> $e||echo sorry} |
-function ddump(){diff -w \`dump/"$1" "$1"}   |  diff local file with new one in dump
-function cdump(){cp -p \`dump/"$1" "$1"}   |  replace local file with new one in dump
+``function scd(){setopt nonomatch;e=/dev/null;cd $1 &> $e||cd ${1}* &> $e||cd *$1 &> $e||cd *${1}* &> $e||echo sorry}`` |
+``function ddump(){diff -w \`dump/"$1" "$1"}  `` |  diff local file with new one in dump
+``function cdump(){cp -p \`dump/"$1" "$1"}  `` |  replace local file with new one in dump
 
 
 # Generating a command from an earlier one
@@ -155,32 +155,35 @@ How to recall the parameters of a previous command, on line 7 below recall the p
 7> mv somefile2 /home/saket/stuff/books/
 ```
 
-``` $ mv !?saket<TAB>``` Would bring up the whole line ready for a little editing
-``` $ mv !?saket?:*<tab>``` Would just bring up the parameters
+Command  | Description
+--- | ---
+``` $ mv !?saket<TAB>```  | Would bring up the whole line ready for a little editing
+``` $ mv !?saket?:*<tab>```  | Would just bring up the parameters
+
 If you know the history number of the line (say 5) with desired parameters you can try ```!5:s/somefile1/somefile2/```
-and if you dont know the history number```!?saket?:s/somefile1/somefile2/```
+and if you dont know the history number ```!?saket?:s/somefile1/somefile2/```
 
 # Variable Substitution
 
 Truncate strings in an array
-```
-s=(fred joe peter);echo ${s/(#m)*/$MATCH[1,3]}
+``` zsh
+s=(fred joe peter); echo ${s/(#m)*/$MATCH[1,3]}
 ```
 
 # History Substitution Summary
-For CURRENT line that you are editing (the # designates current line)
+For **current** line that you are editing (the # designates current line)
 
-Remember Tab will expand the following:
+Remember *<TAB>* will expand the following:
 
 Command | Description |
 ------- | -------------|
-!#:0   |  command
-!#^    |  first parameter
-!#:1   |  first parameter
-!#:1-4 |  first 4 parameters
-!#$    |  last parameter
-!#*    |  all parameters
-!#$:s/bash/zsh  | perform substitution on previous parameter
+``!#:0  `` |  command
+``!#^   `` |  first parameter
+``!#:1  `` |  first parameter
+``!#:1-4`` |  first 4 parameters
+``!#$   `` |  last parameter
+``!#*   `` |  all parameters
+``!#$:s/bash/zsh``  | perform substitution on previous parameter
 
 # Backup a file with a prefix
 
