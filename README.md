@@ -25,12 +25,12 @@ Command                    | Description
 -------------------------- | ------------
 `ls *(.)`                  | list just regular files
 `ls -d *(/)`               | list just directories
-`ls (x*`x[3-5])`           | list files x* except x3 to x5
-`ls x^[3-5]*`              | list files x* except x3 to x5
+``ls (x*`x[3-5])``           | list files x* except x3 to x5
+`ls x^[3-5]*`              | list files x\* except x3 to x5
 `ls *(.[3])`               | third file
-`ls **/*`*/.git/*`         | ignore all git subdirectories *`* matches a path
+``ls **/*`*/.git/*``         | ignore all git subdirectories ``*`*`` matches a path
 `vi *(.om[1])`             | vi newest file
-`vi *`ssver.scc(.om[1]) &` | newest file ignoring any vssver.scc
+``vi *`ssver.scc(.om[1]) &`` | newest file ignoring any vssver.scc
 `vi !$`                    | vi last parameter
 `vi !-2:2`                 | second parameter of second but last command
 `vi !$:r.py`               | vi last parameter but change extension to .py
@@ -62,7 +62,7 @@ Command                    | Description
 Command                                   | Description
 ------ | ----------
 `ls -ld *.*(u:apache:)`                   | User is apache
-```ls -l *.*`[a-m]*(u:nobody:g:apache:.xX)``` | Excluding files a-m but only if owned by apache
+``ls -l *.*`[a-m]*(u:nobody:g:apache:.xX)`` | Excluding files a-m but only if owned by apache
 `ls **/*(u0WLk+10m0)`                     | Find all files owned by root (u0), world-writable (W), more than 10k in size (Lk+10) and modified during the last hour (m0)
 `ls **/*(.:g-w:)`                         | find all files that don’t have the write permission to group in current directory and all subdirectories
 
@@ -72,7 +72,7 @@ Requires extended globbing `setopt EXTENDED_GLOB`
 
 Command                                     | Description
 ------------------------------------------- | --------------------------------------------
-```grep -i "$1" */*.php`libs/*`temp/*`test/*``` | Exclude directories lib,temp,test from grep
+``grep -i "$1" */*.php`libs/*`temp/*`test/*`` | Exclude directories lib,temp,test from grep
 `ls DATA_[0-9](#c3).csv`                    | match all files DATA_nnn.csv
 `ls a(#c3).txt`                             | match aaa.txt
 `ls DATA_[0-9](#c4,7).csv`                  | match DATA_nnnn.csv to DATA_nnnnnnn.txt
@@ -84,8 +84,8 @@ Command                                     | Description
 # Greps
 Command | Description |
 ------- | -------------|
-```grep -i "$1" **/*.{js,php,css}`(libs|temp|temp|test)/* ``` | exclude directories from grep  EXTENDED_GLOB required|
-```grep -iw '$direct' report/**/*.{inc,php}```   | searching for a php variable|
+``grep -i "$1" **/*.{js,php,css}`(libs|temp|temp|test)/* `` | exclude directories from grep  EXTENDED_GLOB required|
+``grep -iw '$direct' report/**/*.{inc,php}``   | searching for a php variable|
 
 # Cleanup
 | Command        | Description                             |
@@ -98,29 +98,29 @@ Command | Description |
 
 Command | Description |
 ------- | -------------|
-!1 | oldest command in your history
-!! | previous command
-!-2 | command before last
-!$ | last argument of previous command
-!$:h  | last argument, strip one level
-!$:h:h  | last argument, strip two levels
-!?echo |
-echo !* !!:* | all parameters
-echo !$ !!:$  | last parameter
-echo !^ !:1 !!:1 | first previous parameter
-echo !:2-3   | echo previous parameters 2 to 3
-echo !:2*    | echo previous parameters 2 onwards
-echo !:2-    | echo previous parameters 2 onwards omitting last
-echo !:-3    | echo first 3 previous parameters
-echo !-2:2 | second parameter of second but last command
-touch 1 2 3    |
-!!:0 !^ !:2 !$ !#$ !#:2 !#1 !#0   |
-history               | View recent commands
-!42                   | Re-execute history command 42
+`!1 `| oldest command in your history
+`!!` | previous command
+`!-2` | command before last
+`!$` | last argument of previous command
+`!$:h`  | last argument, strip one level
+`!$:h:h`  | last argument, strip two levels
+`!?echo` |
+`echo !* !!:* `| all parameters
+`echo !$ !!:$`  | last parameter
+`echo !^ !:1 !!:1` | first previous parameter
+`echo !:2-3`   | echo previous parameters 2 to 3
+`echo !:2*`    | echo previous parameters 2 onwards
+`echo !:2-`    | echo previous parameters 2 onwards omitting last
+`echo !:-3`    | echo first 3 previous parameters
+`echo !-2:2` | second parameter of second but last command
+`touch 1 2 3`    |
+`!!:0 !^ !:2 !$ !#$ !#:2 !#1 !#0`   |
+`history`               | View recent commands
+`!42`                   | Re-execute history command 42
 
 # substitute previous command
 Command | Description |
-------- | -------------|
+------- | -------------
 r oldstr=newstr |
 !!:s/fred/joe/        | edit previous command replace first fred by joe
 !!:s/fred/joe/        | Note : sadly no regexp available with :s///
